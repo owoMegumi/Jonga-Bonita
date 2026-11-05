@@ -1,0 +1,3825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JONGA BONITA — Play Beautiful | Football Development & Mentorship Organisation</title>
+  
+  <!-- Fonts: Anton (The Grind's Condensed Heavy Display) + Plus Jakarta Sans (Clean Modern Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    try {
+      if (!localStorage.getItem('jongaBonitaIntroSeen')) {
+        document.documentElement.classList.add('intro-pending');
+      }
+    } catch (error) {
+      console.warn('The first-visit intro is disabled because browser storage is unavailable.', error);
+    }
+  </script>
+
+  <style>
+    /* -------------------------------------------------------------
+       THE GRIND ARCHITECTURAL DESIGN SYSTEM (Blue, Black & White)
+    ------------------------------------------------------------- */
+    :root {
+      --bg-black: #080809;
+      --bg-card: #0F1013;
+      --bg-surface: #14161B;
+      --bg-hover: #1A1D24;
+
+      --text-white: #FFFFFF;
+      --text-offwhite: #E6E8EC;
+      --text-muted: #8E939F;
+      --text-dark-muted: #434752;
+
+      /* Royal Athletic Blue & Minimalist Chalk Lines */
+      --brand-blue: #0052FF;
+      --brand-blue-hover: #003FCC;
+      --brand-blue-glow: rgba(0, 82, 255, 0.35);
+      --brand-blue-subtle: rgba(0, 82, 255, 0.1);
+      
+      --chalk-line: rgba(255, 255, 255, 0.12);
+      --chalk-subtle: rgba(255, 255, 255, 0.06);
+
+      --font-headline: 'Anton', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+
+      --radius-sm: 2px;
+      --radius-card: 4px;
+      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      background-image:
+        radial-gradient(ellipse at 12% 18%, rgba(0, 82, 255, 0.18), transparent 34%),
+        radial-gradient(ellipse at 86% 32%, rgba(255, 255, 255, 0.18), transparent 30%),
+        radial-gradient(ellipse at 48% 58%, rgba(255, 255, 255, 0.055), transparent 38%),
+        radial-gradient(ellipse at 62% 86%, rgba(0, 82, 255, 0.12), transparent 38%);
+      background-size: 170% 170%;
+      background-attachment: fixed;
+      animation: siteGlowDrift 32s ease-in-out infinite alternate;
+      isolation: isolate;
+      color: var(--text-white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      selection-background-color: var(--brand-blue);
+    }
+
+    @keyframes siteGlowDrift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 45%; }
+      100% { background-position: 30% 100%; }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -35%;
+      z-index: 900;
+      pointer-events: none;
+      opacity: 0.22;
+      mix-blend-mode: screen;
+      filter: blur(48px);
+      background:
+        radial-gradient(ellipse at 18% 24%, rgba(0, 82, 255, 0.42), transparent 34%),
+        radial-gradient(ellipse at 80% 36%, rgba(255, 255, 255, 0.48), transparent 30%),
+        radial-gradient(ellipse at 40% 72%, rgba(255, 255, 255, 0.15), transparent 34%),
+        radial-gradient(ellipse at 62% 82%, rgba(0, 82, 255, 0.34), transparent 36%);
+      background-size: 170% 170%;
+      animation: siteGlowDrift 38s ease-in-out infinite alternate;
+    }
+
+    ::selection {
+      background: var(--brand-blue);
+      color: #fff;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+
+    /* -------------------------------------------------------------
+       THE GRIND'S CHALK CORNER CROSSHAIRS (+)
+    ------------------------------------------------------------- */
+    .chalk-cross-tl, .chalk-cross-tr, .chalk-cross-bl, .chalk-cross-br {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      pointer-events: none;
+      z-index: 10;
+      color: rgba(255, 255, 255, 0.35);
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .chalk-cross-tl { top: -7px; left: -7px; }
+    .chalk-cross-tr { top: -7px; right: -7px; }
+    .chalk-cross-bl { bottom: -7px; left: -7px; }
+    .chalk-cross-br { bottom: -7px; right: -7px; }
+
+    /* -------------------------------------------------------------
+       BRUTALIST TYPOGRAPHY SYSTEM
+    ------------------------------------------------------------- */
+    .title-stacked-giant {
+      font-family: var(--font-headline);
+      font-size: clamp(3.2rem, 7.8vw, 7.2rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: var(--text-white);
+    }
+
+    .title-stacked-giant span.blue-highlight {
+      color: var(--brand-blue);
+    }
+
+    .title-section-grind {
+      font-family: var(--font-headline);
+      font-size: clamp(2.4rem, 5.2vw, 4.6rem);
+      line-height: 0.94;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .tag-category-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brand-blue);
+      margin-bottom: 1.25rem;
+    }
+
+    .tag-category-pill::before {
+      content: '';
+      width: 14px;
+      height: 2px;
+      background: var(--brand-blue);
+    }
+
+    /* -------------------------------------------------------------
+       STICKY EDITORIAL NAVIGATION
+    ------------------------------------------------------------- */
+    .site-nav-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8, 8, 9, 0.94);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .nav-inner-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.15rem 0;
+    }
+
+    .brand-symbol-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-headline);
+      font-size: 1.55rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-square {
+      width: 28px;
+      height: 28px;
+      background: var(--brand-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 900;
+      border-radius: var(--radius-sm);
+    }
+
+    .brand-logo {
+      display: block;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .nav-horizontal-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-anchor {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.4rem 0;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .nav-anchor:hover,
+    .nav-anchor.active {
+      color: var(--text-white);
+    }
+
+    .nav-anchor.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1.2rem;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--brand-blue);
+    }
+
+    .btn-grind-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: var(--radius-card);
+      transition: var(--transition-smooth);
+    }
+
+    .btn-action-primary {
+      background: var(--text-white);
+      color: #000;
+    }
+
+    .btn-action-primary:hover {
+      background: var(--brand-blue);
+      color: #fff;
+    }
+
+    .btn-action-blue {
+      background: var(--brand-blue);
+      color: #fff;
+      box-shadow: 0 4px 18px var(--brand-blue-glow);
+    }
+
+    .btn-action-blue:hover {
+      background: var(--brand-blue-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-action-outline {
+      border: 1px solid var(--chalk-line);
+      color: var(--text-white);
+    }
+
+    .btn-action-outline:hover {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* -------------------------------------------------------------
+       THE GRIND RUNNING MARQUEE STRIP
+    ------------------------------------------------------------- */
+    .running-ticker-track {
+      background: #040405;
+      border-top: 1px solid var(--chalk-line);
+      border-bottom: 1px solid var(--chalk-line);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.85rem 0;
+      contain: paint;
+    }
+
+    .ticker-belt {
+      display: flex;
+      width: max-content;
+      animation: marqueeRun 32s linear infinite;
+      will-change: transform;
+    }
+
+    .ticker-group {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 3.5rem;
+      padding-right: 3.5rem;
+    }
+
+    .ticker-statement {
+      font-family: var(--font-headline);
+      font-size: 1.35rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .ticker-statement span.divider {
+      color: var(--brand-blue);
+    }
+
+    @keyframes marqueeRun {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* -------------------------------------------------------------
+       SPA PAGE ROUTING SYSTEM
+    ------------------------------------------------------------- */
+    .page-section-view {
+      display: none;
+      min-height: 80vh;
+      animation: viewTransition 0.35s ease forwards;
+    }
+
+    .page-section-view.active-view {
+      display: block;
+    }
+
+    @keyframes viewTransition {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* -------------------------------------------------------------
+       HERO SECTION WITH INTAKE ASSESSMENT WIDGET
+    ------------------------------------------------------------- */
+    .hero-editorial-block {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .hero-editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4.5rem;
+      align-items: flex-start;
+    }
+
+    .hero-supporting-copy {
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin: 2rem 0 2.5rem;
+      max-width: 600px;
+    }
+
+    .grind-intake-card {
+      background: var(--bg-card);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      padding: 2.25rem;
+      position: relative;
+    }
+
+    .intake-step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-blue);
+      font-weight: 800;
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--chalk-subtle);
+    }
+
+    .intake-question-title {
+      font-family: var(--font-headline);
+      font-size: 1.5rem;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .intake-options-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .intake-option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.2rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-offwhite);
+      transition: var(--transition-smooth);
+      text-align: left;
+    }
+
+    .intake-option-row:hover {
+      border-color: var(--brand-blue);
+      background: var(--bg-hover);
+    }
+
+    .intake-option-row.active {
+      border-color: var(--brand-blue);
+      background: var(--brand-blue-subtle);
+      color: #fff;
+    }
+
+    .intake-option-row span.arrow-indicator {
+      color: var(--brand-blue);
+      font-size: 1.1rem;
+    }
+
+    /* -------------------------------------------------------------
+       METRIC FOUR-PILLAR STRIP
+    ------------------------------------------------------------- */
+    .metrics-row-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .metric-column h3 {
+      font-family: var(--font-headline);
+      font-size: 2.2rem;
+      line-height: 0.95;
+      color: var(--text-white);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .metric-column h3 span.symbol {
+      color: var(--brand-blue);
+    }
+
+    .metric-column p {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* -------------------------------------------------------------
+       HORIZONTAL SCROLL CAROUSEL (PROGRAMMES)
+    ------------------------------------------------------------- */
+    .horizontal-scroll-container {
+      padding: 5.5rem 0;
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .scroll-controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .horizontal-reel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--brand-blue) var(--bg-card);
+    }
+
+    .horizontal-reel::-webkit-scrollbar {
+      height: 4px;
+    }
+    .horizontal-reel::-webkit-scrollbar-track {
+      background: var(--bg-card);
+    }
+    .horizontal-reel::-webkit-scrollbar-thumb {
+      background: var(--brand-blue);
+    }
+
+    .grind-program-slide {
+      flex: 0 0 calc(33.333% - 1rem);
+      min-width: 340px;
+      scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .grind-program-slide:hover {
+      border-color: var(--brand-blue);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+    }
+
+    .slide-media-holder {
+      aspect-ratio: 16/10;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .slide-media-holder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(35%) contrast(110%);
+      transition: transform 0.6s ease;
+    }
+
+    .grind-program-slide:hover .slide-media-holder img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+
+    .slide-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: #000;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--chalk-line);
+    }
+
+    .slide-body-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .slide-title {
+      font-family: var(--font-headline);
+      font-size: 1.8rem;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .slide-excerpt {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .slide-bottom-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--chalk-line);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .slide-bottom-meta span.view-link {
+      color: var(--brand-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* -------------------------------------------------------------
+       THE MISSION CALLOUT STRIP (FULL BLEED EDITORIAL)
+    ------------------------------------------------------------- */
+    .mission-callout-strip {
+      background: #0B0E14;
+      border-top: 1px solid var(--chalk-line);
+      border-bottom: 1px solid var(--chalk-line);
+      padding: 6rem 0;
+      text-align: center;
+    }
+
+    .mission-text-banner {
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 4.4vw, 3.8rem);
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      max-width: 1100px;
+      margin: 0 auto;
+      color: var(--text-white);
+    }
+
+    .mission-text-banner span.blue-glow {
+      color: var(--brand-blue);
+      text-shadow: 0 0 25px var(--brand-blue-glow);
+    }
+
+    /* -------------------------------------------------------------
+       THE GRIND'S STICKY SPLIT: "OUR APPROACH GOES BEYOND FOOTBALL"
+    ------------------------------------------------------------- */
+    .sticky-split-section {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--chalk-line);
+      position: relative;
+    }
+
+    .split-sticky-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 5rem;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sticky-pinned-col {
+      position: sticky;
+      top: 6rem;
+      min-height: calc(100vh - 12rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 0;
+    }
+
+    .sticky-pinned-col > :not(.approach-photo-stack) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .approach-photo-stack {
+      position: absolute;
+      inset: 0 auto 0 0;
+      z-index: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      isolation: isolate;
+      pointer-events: none;
+    }
+
+    .approach-photo-stack::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(5, 5, 8, 0.36) 0%, rgba(5, 5, 8, 0.3) 50%, rgba(5, 5, 8, 0.18) 72%, #080809 100%),
+        linear-gradient(0deg, rgba(5, 5, 8, 0.52), rgba(5, 5, 8, 0.12) 55%, rgba(5, 5, 8, 0.22));
+      pointer-events: none;
+    }
+
+    .approach-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 36%;
+      opacity: 0;
+      transform: scale(1.035);
+      transition: opacity 650ms ease, transform 1100ms cubic-bezier(0.2, 0.65, 0.3, 1);
+    }
+
+    .approach-photo.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .scroll-testimonials-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .thegrind-review-box {
+      background: var(--bg-card);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      padding: 2.5rem;
+      transition: var(--transition-smooth);
+    }
+
+    .thegrind-review-box:hover {
+      border-color: var(--brand-blue);
+    }
+
+    .review-quote-headline {
+      font-family: var(--font-headline);
+      font-size: 1.5rem;
+      line-height: 1.15;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      color: var(--text-white);
+    }
+
+    .review-copy-body {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+    }
+
+    .review-author-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-offwhite);
+      border-top: 1px solid var(--chalk-subtle);
+      padding-top: 1rem;
+    }
+
+    /* -------------------------------------------------------------
+       DEDICATED PROGRAMME SUB-PAGE VIEW
+    ------------------------------------------------------------- */
+    .program-deepdive-wrapper {
+      padding: 5rem 0 6rem;
+    }
+
+    .deepdive-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4.5rem;
+      align-items: flex-start;
+    }
+
+    .specs-matrix-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      padding: 2rem 0;
+      border-top: 1px solid var(--chalk-line);
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .spec-matrix-cell h5 {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .spec-matrix-cell p {
+      font-family: var(--font-headline);
+      font-size: 1.45rem;
+      letter-spacing: 0.02em;
+      color: var(--text-white);
+    }
+
+    .curriculum-pillar-line {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .curriculum-pillar-line .num-lead {
+      font-family: var(--font-headline);
+      color: var(--brand-blue);
+      font-size: 1.2rem;
+    }
+
+    .sticky-enrollment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      padding: 2.5rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .price-value-huge {
+      font-family: var(--font-headline);
+      font-size: 3.4rem;
+      line-height: 0.95;
+      margin: 0.5rem 0 1.25rem;
+      color: var(--text-white);
+    }
+
+    .price-value-huge span.period {
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* -------------------------------------------------------------
+       INTEGRATED BOOKING SYSTEM & CALENDAR
+    ------------------------------------------------------------- */
+    .booking-system-wrapper {
+      padding: 5rem 0 6rem;
+    }
+
+    .booking-system-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    .calendar-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .calendar-month-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .calendar-month-bar h4 {
+      font-family: var(--font-headline);
+      font-size: 1.45rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .days-header-strip {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .calendar-days-array {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+
+    .day-number-tile {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .day-number-tile:hover:not(.disabled) {
+      border-color: var(--brand-blue);
+      background: var(--bg-surface);
+      color: #fff;
+    }
+
+    .day-number-tile.active {
+      background: var(--brand-blue) !important;
+      color: #fff !important;
+      font-weight: 800;
+    }
+
+    .day-number-tile.disabled {
+      color: var(--text-dark-muted);
+      cursor: not-allowed;
+    }
+
+    .slot-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .slot-row-card {
+      padding: 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .slot-row-card:hover {
+      border-color: var(--brand-blue);
+      background: var(--bg-hover);
+    }
+
+    .slot-row-card.active {
+      border-color: var(--brand-blue);
+      background: var(--brand-blue-subtle);
+      color: #fff;
+    }
+
+    .slot-row-card strong {
+      font-family: var(--font-headline);
+      font-size: 1.15rem;
+      letter-spacing: 0.04em;
+    }
+
+    .reservation-checkout-card {
+      background: var(--bg-card);
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      padding: 2.25rem;
+    }
+
+    .checkout-form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .checkout-field-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .checkout-input,
+    .checkout-select {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--chalk-line);
+      color: var(--text-white);
+      padding: 0.95rem 1.1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      border-radius: var(--radius-card);
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .checkout-input:focus,
+    .checkout-select:focus {
+      border-color: var(--brand-blue);
+      box-shadow: 0 0 0 1px var(--brand-blue);
+    }
+
+    .reservation-summary-receipt {
+      background: #040405;
+      border: 1px solid var(--chalk-line);
+      padding: 1.25rem;
+      border-radius: var(--radius-card);
+      margin: 1.75rem 0;
+    }
+
+    .receipt-line-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .receipt-line-item.total-line {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--chalk-line);
+      color: var(--text-white);
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    /* -------------------------------------------------------------
+       THATCHFIELD BASE & MAP INTEGRATION
+    ------------------------------------------------------------- */
+    .thatchfield-ground-section {
+      margin-top: 5rem;
+      padding-top: 4.5rem;
+      border-top: 1px solid var(--chalk-line);
+    }
+
+    .thatchfield-map-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 2.5rem;
+    }
+
+    .map-frame-box {
+      height: 480px;
+      border: 1px solid var(--chalk-line);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .map-frame-box iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: grayscale(100%) invert(92%) contrast(120%);
+    }
+
+    .contact-item-box {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .contact-square-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-surface);
+      border: 1px solid var(--chalk-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--brand-blue);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .hours-table-grind {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-top: 1rem;
+    }
+
+    .hours-table-grind tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hours-table-grind td {
+      padding: 0.55rem 0;
+      color: var(--text-muted);
+    }
+
+    .hours-table-grind td.time-right {
+      text-align: right;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* -------------------------------------------------------------
+       THE GRIND'S ACCORDION FAQ
+    ------------------------------------------------------------- */
+    .faq-wrapper-section {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .faq-list-stack {
+      max-width: 900px;
+      margin-top: 3rem;
+    }
+
+    .faq-accordion-row {
+      border-bottom: 1px solid var(--chalk-line);
+    }
+
+    .faq-accordion-header {
+      width: 100%;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      font-family: var(--font-headline);
+      font-size: 1.4rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .faq-accordion-header:hover {
+      color: var(--brand-blue);
+    }
+
+    .faq-accordion-drawer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .faq-accordion-drawer.open {
+      max-height: 250px;
+      padding-bottom: 1.5rem;
+    }
+
+    /* -------------------------------------------------------------
+       SITE FOOTER
+    ------------------------------------------------------------- */
+    .site-footer-block {
+      background: #040405;
+      padding: 5rem 0 3rem;
+    }
+
+    .footer-columns-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 3.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-col-item h5 {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-white);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-nav-list a {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-nav-list a:hover {
+      color: var(--brand-blue);
+    }
+
+    /* -------------------------------------------------------------
+       RESPONSIVE RULES
+    ------------------------------------------------------------- */
+    @media (max-width: 1024px) {
+      .hero-editorial-grid,
+      .split-sticky-grid,
+      .deepdive-grid,
+      .booking-system-layout,
+      .thatchfield-map-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .sticky-pinned-col {
+        position: relative;
+        top: 0;
+        min-height: calc(100vh - 8rem);
+      }
+      .approach-photo-stack {
+        width: 50%;
+      }
+      .grind-program-slide {
+        flex: 0 0 calc(50% - 1rem);
+      }
+      .metrics-row-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-columns-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .sticky-split-section .split-sticky-grid {
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-horizontal-links {
+        display: none;
+      }
+      .grind-program-slide {
+        flex: 0 0 calc(100% - 1rem);
+      }
+      .metrics-row-strip,
+      .slot-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-columns-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       CINEMATIC MATCHDAY EXPERIENCE
+    ------------------------------------------------------------- */
+    :root {
+      --bg-black: #080809;
+      --bg-card: #0f1013;
+      --bg-surface: #14161b;
+      --bg-hover: #1a1d24;
+      --text-white: #ffffff;
+      --text-offwhite: #e6e8ec;
+      --text-muted: #a0a4af;
+      --text-dark-muted: #777d89;
+      --brand-blue: #315bff;
+      --brand-blue-hover: #2148e8;
+      --brand-blue-glow: rgba(49, 91, 255, 0.3);
+      --brand-blue-subtle: rgba(49, 91, 255, 0.12);
+      --chalk-line: rgba(255, 255, 255, 0.13);
+      --chalk-subtle: rgba(255, 255, 255, 0.07);
+    }
+
+    body {
+      background-color: var(--bg-black);
+      background-image:
+        radial-gradient(ellipse at 12% 18%, rgba(49, 91, 255, 0.22), transparent 34%),
+        radial-gradient(ellipse at 86% 32%, rgba(255, 255, 255, 0.2), transparent 30%),
+        radial-gradient(ellipse at 48% 58%, rgba(255, 255, 255, 0.07), transparent 38%),
+        radial-gradient(ellipse at 62% 86%, rgba(49, 91, 255, 0.17), transparent 38%);
+      background-size: 170% 170%;
+      background-attachment: fixed;
+      animation: siteGlowDrift 32s ease-in-out infinite alternate;
+      color: var(--text-white);
+    }
+
+    .site-nav-header {
+      background: rgba(8, 8, 9, 0.92);
+      border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-inner-row {
+      min-height: 76px;
+      padding: 0.75rem 0;
+      position: relative;
+    }
+
+    .brand-symbol-group {
+      color: #fff;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .brand-square {
+      border-radius: 50%;
+      background: var(--brand-blue);
+      color: #fff;
+    }
+
+    .nav-anchor {
+      color: #a0a4af;
+      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .nav-anchor.active::after {
+      bottom: -1.55rem;
+    }
+
+    .btn-action-primary {
+      background: var(--brand-blue);
+      color: #fff;
+    }
+
+    .btn-action-primary:hover {
+      background: var(--brand-blue-hover);
+      color: #fff;
+    }
+
+    .btn-action-outline {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .btn-action-outline:hover {
+      border-color: var(--brand-blue);
+      color: var(--brand-blue);
+      background: rgba(49, 91, 255, 0.08);
+    }
+
+    .btn-action-blue {
+      background: var(--brand-blue);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(49, 91, 255, 0.22);
+    }
+
+    .btn-grind-action {
+      border-radius: 999px;
+    }
+
+    .running-ticker-track {
+      background: #050506;
+      border-color: rgba(49, 91, 255, 0.3);
+      padding: 0.85rem 0;
+    }
+
+    .ticker-statement,
+    .ticker-statement span.divider {
+      color: #fff;
+    }
+
+    .page-section-view {
+      animation-duration: 0.55s;
+    }
+
+    .hero-editorial-block {
+      min-height: min(850px, calc(100svh - 110px));
+      display: flex;
+      align-items: center;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: clamp(4rem, 8vh, 7rem) 0 2rem;
+      border: 0;
+      color: #fff;
+      background: #080809 url("hero-training.jpg") center 42% / cover no-repeat;
+    }
+
+    .hero-editorial-block::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(5, 5, 8, 0.9) 0%, rgba(5, 5, 8, 0.62) 52%, rgba(5, 5, 8, 0.24) 100%),
+        linear-gradient(0deg, rgba(5, 5, 8, 0.8), transparent 38%);
+    }
+
+    .hero-editorial-block > .container {
+      width: 100%;
+    }
+
+    .hero-editorial-grid {
+      align-items: center;
+      gap: 0;
+    }
+
+    .hero-editorial-block .tag-category-pill {
+      color: #e6e8ec;
+    }
+
+    .hero-editorial-block .tag-category-pill::before {
+      background: var(--brand-blue);
+    }
+
+    .hero-editorial-block .title-stacked-giant {
+      max-width: 850px;
+      color: #fff;
+      font-size: clamp(4rem, 9.2vw, 9rem);
+      line-height: 0.84;
+      letter-spacing: -0.015em;
+      text-wrap: balance;
+    }
+
+    .hero-editorial-block .title-stacked-giant .blue-highlight {
+      color: var(--brand-blue);
+    }
+
+    .hero-tagline {
+      margin-top: 0.8rem;
+      font-family: var(--font-headline);
+      font-size: clamp(1.05rem, 2.3vw, 2rem);
+      line-height: 1;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .first-visit-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #080809;
+      pointer-events: none;
+    }
+
+    html.intro-pending,
+    html.intro-pending body {
+      overflow: hidden;
+    }
+
+    html.intro-pending .first-visit-intro {
+      display: flex;
+    }
+
+    .first-visit-intro.is-playing {
+      animation: introBackdropReveal 2.7s ease-in forwards;
+    }
+
+    .first-visit-intro-wordmark {
+      position: relative;
+      color: transparent;
+      background: url("hero-training.jpg") center 42% / cover no-repeat;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 8px 26px rgba(0, 0, 0, 0.35));
+      font-family: var(--font-headline);
+      font-size: clamp(4rem, 14vw, 12rem);
+      letter-spacing: -0.035em;
+      line-height: 0.78;
+      text-align: center;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .first-visit-intro.is-playing .first-visit-intro-wordmark {
+      animation: introWordmarkZoom 2.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+
+    @keyframes introWordmarkZoom {
+      0% { opacity: 0; transform: scale(0.82); }
+      12% { opacity: 1; transform: scale(1); }
+      72% { opacity: 1; transform: scale(8); }
+      100% { opacity: 0; transform: scale(24); }
+    }
+
+    @keyframes introBackdropReveal {
+      0%, 72% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .first-visit-intro-wordmark {
+        font-size: 15vw;
+      }
+    }
+
+    .hero-supporting-copy {
+      max-width: 590px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: clamp(1rem, 1.35vw, 1.18rem);
+    }
+
+    .hero-supporting-copy strong {
+      color: #fff;
+    }
+
+    .hero-editorial-block .btn-action-outline {
+      border-color: rgba(255, 255, 255, 0.42);
+      color: #fff;
+    }
+
+    .hero-editorial-block .btn-action-outline:hover {
+      border-color: #fff;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-top: clamp(2.5rem, 7vh, 5rem);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll-cue::before {
+      content: "";
+      width: 44px;
+      height: 1px;
+      background: var(--brand-blue);
+      transition: width 0.3s ease;
+    }
+
+    .hero-scroll-cue:hover::before {
+      width: 68px;
+    }
+
+    .metrics-row-strip {
+      padding: 2.8rem 0;
+    }
+
+    .metric-column h3 {
+      font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+    }
+
+    .title-section-grind {
+      color: var(--text-white);
+    }
+
+    .horizontal-scroll-container,
+    .sticky-split-section,
+    .faq-wrapper-section {
+      border-color: var(--chalk-line);
+    }
+
+    .horizontal-scroll-container {
+      padding-top: clamp(4rem, 8vw, 7rem);
+      padding-bottom: clamp(4rem, 8vw, 7rem);
+    }
+
+    .programmes-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .programmes-heading .title-section-grind {
+      white-space: nowrap;
+      font-size: clamp(1.6rem, 3.7vw, 3.8rem);
+    }
+
+    .programmes-title {
+      min-width: 0;
+    }
+
+    .programmes-heading .tag-category-pill {
+      margin-bottom: 0.8rem;
+    }
+
+    .programmes-heading .programmes-controls {
+      flex: 0 0 auto;
+      padding-bottom: 0.3rem;
+    }
+
+    .grind-program-slide,
+    .thegrind-review-box,
+    .calendar-panel,
+    .reservation-checkout-card,
+    .sticky-enrollment-card {
+      border-radius: 20px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.24);
+    }
+
+    .grind-program-slide {
+      border-color: rgba(255, 255, 255, 0.14);
+      position: relative;
+      min-height: 430px;
+      isolation: isolate;
+      background: #080809;
+      color: #fff;
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.34);
+      transition: transform 0.65s cubic-bezier(0.2, 0.65, 0.3, 1), box-shadow 0.45s ease, border-color 0.35s ease;
+    }
+
+    @media (min-width: 1025px) {
+      .grind-program-slide {
+        flex: 0 0 calc((100% - 4.5rem) / 4);
+        min-width: 0;
+      }
+    }
+
+    .grind-program-slide:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.5);
+    }
+
+    .slide-media-holder {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      aspect-ratio: auto;
+      background: #080809;
+    }
+
+    .slide-media-holder::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(5, 5, 8, 0.08) 8%, rgba(5, 5, 8, 0.2) 32%, rgba(5, 5, 8, 0.96) 100%);
+    }
+
+    .slide-media-holder img {
+      filter: saturate(0.9) contrast(1.05);
+      transition: transform 0.9s cubic-bezier(0.2, 0.65, 0.3, 1), filter 0.6s ease;
+    }
+
+    .grind-program-slide:hover .slide-media-holder img {
+      transform: scale(1.07);
+      filter: saturate(1.08) contrast(1.05);
+    }
+
+    .slide-body-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      min-height: 0;
+      justify-content: flex-end;
+      padding: clamp(1.35rem, 2vw, 2rem);
+      background: linear-gradient(180deg, transparent 20%, rgba(5, 5, 8, 0.28) 48%, rgba(5, 5, 8, 0.94) 100%);
+    }
+
+    #programmes-reel .slide-tag,
+    #programmes-reel .slide-excerpt,
+    #programmes-reel .slide-bottom-meta {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      transition: opacity 450ms ease, transform 550ms cubic-bezier(0.2, 0.65, 0.3, 1), max-height 550ms ease, margin 450ms ease, padding 450ms ease;
+    }
+
+    #programmes-reel .slide-tag {
+      transform: translateY(0.75rem);
+    }
+
+    #programmes-reel .slide-excerpt {
+      max-height: 0;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+
+    #programmes-reel .slide-bottom-meta {
+      max-height: 0;
+      overflow: hidden;
+      padding-top: 0;
+      border-top-color: transparent;
+    }
+
+    #programmes-reel .grind-program-slide:hover .slide-tag,
+    #programmes-reel .grind-program-slide:focus-visible .slide-tag,
+    #programmes-reel .grind-program-slide:hover .slide-excerpt,
+    #programmes-reel .grind-program-slide:focus-visible .slide-excerpt,
+    #programmes-reel .grind-program-slide:hover .slide-bottom-meta,
+    #programmes-reel .grind-program-slide:focus-visible .slide-bottom-meta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #programmes-reel .grind-program-slide:hover .slide-excerpt,
+    #programmes-reel .grind-program-slide:focus-visible .slide-excerpt {
+      max-height: 10rem;
+      margin-bottom: 1rem;
+    }
+
+    #programmes-reel .grind-program-slide:hover .slide-bottom-meta,
+    #programmes-reel .grind-program-slide:focus-visible .slide-bottom-meta {
+      max-height: 5rem;
+      padding-top: 1.25rem;
+      border-top-color: var(--chalk-line);
+    }
+
+    .slide-title {
+      color: #fff;
+      font-size: clamp(1.55rem, 2vw, 1.9rem);
+      text-wrap: balance;
+    }
+
+    .slide-excerpt {
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 34ch;
+    }
+
+    .slide-bottom-meta {
+      gap: 0.75rem;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.24);
+      font-size: 0.72rem;
+    }
+
+    .slide-bottom-meta span.view-link {
+      color: var(--brand-blue);
+      white-space: nowrap;
+    }
+
+    .slide-media-holder img {
+      filter: saturate(0.82) contrast(1.04);
+    }
+
+    .slide-tag {
+      border-radius: 999px;
+      background: rgba(8, 8, 9, 0.86);
+      backdrop-filter: blur(8px);
+    }
+
+    .mission-callout-strip {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: #080809 url("mission-training.jpg") center 48% / cover no-repeat;
+      border-color: #080809;
+      padding: clamp(4rem, 8vw, 7.5rem) 0;
+    }
+
+    .mission-callout-strip::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5, 6, 10, 0.84), rgba(5, 6, 10, 0.66) 50%, rgba(5, 6, 10, 0.8)),
+        linear-gradient(0deg, rgba(5, 6, 10, 0.48), rgba(5, 6, 10, 0.24));
+    }
+
+    .mission-callout-strip .mission-text-banner {
+      color: #fff;
+      font-size: clamp(2rem, 4.7vw, 4.5rem);
+    }
+
+    .mission-callout-strip .blue-glow {
+      color: var(--brand-blue);
+    }
+
+    .sticky-split-section {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+    }
+
+    .thegrind-review-box {
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .coach-profile-section {
+      padding: 0;
+      border-bottom: 1px solid var(--chalk-line);
+      background:
+        radial-gradient(ellipse at 82% 45%, rgba(49, 91, 255, 0.12), transparent 42%),
+        #080809;
+    }
+
+    .coach-profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 0;
+      width: 100%;
+      max-width: none;
+      padding: 0;
+    }
+
+    .coach-profile-portrait {
+      position: relative;
+      margin: 0;
+      height: min(760px, 86vh);
+      min-height: 560px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: #10141d;
+    }
+
+    .coach-profile-portrait::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 55%, rgba(8, 8, 9, 0.62) 100%);
+      pointer-events: none;
+    }
+
+    .coach-profile-portrait img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+    }
+
+    .coach-profile-copy .title-section-grind {
+      margin-bottom: 1.5rem;
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: 0.9;
+      padding: 2rem clamp(2rem, 6vw, 7rem) 0;
+    }
+
+    .coach-profile-copy > :not(.title-section-grind) {
+      margin-left: clamp(2rem, 6vw, 7rem);
+      margin-right: clamp(2rem, 6vw, 7rem);
+    }
+
+    .coach-profile-copy .title-section-grind .blue-highlight {
+      color: var(--brand-blue);
+    }
+
+    .coach-profile-intro {
+      max-width: 620px;
+      margin-bottom: 1.2rem;
+      color: var(--text-offwhite);
+      font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+      line-height: 1.8;
+    }
+
+    .coach-profile-detail {
+      max-width: 600px;
+      margin-bottom: 2rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+      .coach-profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .coach-profile-portrait {
+        width: 100%;
+        height: min(62vh, 560px);
+        min-height: 380px;
+      }
+
+      .coach-profile-portrait::after {
+        background: linear-gradient(0deg, rgba(8, 8, 9, 0.5), transparent 65%);
+      }
+
+      .coach-profile-copy {
+        padding: 2.5rem 0 4rem;
+      }
+
+      .coach-profile-copy .title-section-grind {
+        padding: 0 1.25rem;
+      }
+
+      .coach-profile-copy > :not(.title-section-grind) {
+        margin-left: 1.25rem;
+        margin-right: 1.25rem;
+      }
+    }
+
+    .review-quote-headline {
+      color: var(--text-white);
+    }
+
+    .faq-accordion-header {
+      color: var(--text-white);
+    }
+
+    .faq-accordion-header:hover {
+      color: var(--brand-blue);
+    }
+
+    .slot-row-card {
+      border-radius: 10px;
+    }
+
+    .checkout-input,
+    .checkout-select {
+      border-radius: 8px;
+      color: var(--text-white);
+      color-scheme: dark;
+    }
+
+    .day-number-tile.active {
+      color: #10150b !important;
+    }
+
+    .reservation-summary-receipt {
+      background: #0b0b0d;
+    }
+
+    .map-frame-box {
+      border-radius: 14px;
+    }
+
+    .site-footer-block {
+      background: #050506;
+      color: #fff;
+    }
+
+    .site-footer-block .brand-symbol-group,
+    .site-footer-block h5,
+    .site-footer-block strong {
+      color: #fff;
+    }
+
+    .site-footer-block [style*="color: var(--text-muted)"],
+    .site-footer-block .footer-nav-list a {
+      color: #a0a4af !important;
+    }
+
+    .scroll-progress-track {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 1100;
+      height: 3px;
+      pointer-events: none;
+    }
+
+    .scroll-progress-bar {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: var(--brand-blue);
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--chalk-line);
+      border-radius: 50%;
+      color: var(--text-white);
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 1300px) {
+      .nav-inner-row {
+        gap: 0.8rem;
+      }
+
+      .mobile-menu-toggle {
+        display: inline-flex;
+        order: 3;
+        flex: 0 0 auto;
+        margin-left: 0.25rem;
+      }
+
+      .nav-inner-row > div:last-child {
+        order: 2;
+        margin-left: auto;
+      }
+
+      .nav-horizontal-links,
+      .nav-horizontal-links.is-open {
+        display: none;
+        position: absolute;
+        top: calc(100% + 0.75rem);
+        left: 0;
+        right: 0;
+        z-index: 20;
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: #111114;
+        border: 1px solid var(--chalk-line);
+        border-radius: 14px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      }
+
+      .nav-horizontal-links.is-open {
+        display: flex;
+      }
+
+      .nav-anchor {
+        padding: 0.9rem 0.25rem;
+        border-bottom: 1px solid var(--chalk-subtle);
+      }
+
+      .nav-anchor:last-child {
+        border-bottom: 0;
+      }
+
+      .nav-anchor.active::after {
+        display: none;
+      }
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.2, 0.65, 0.3, 1);
+    }
+
+    .scroll-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-editorial-block {
+        min-height: auto;
+        background-position: 58% center;
+      }
+
+      .hero-editorial-grid {
+        gap: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-nav-header .container {
+        padding: 0 1rem;
+      }
+
+      .nav-inner-row {
+        min-height: 64px;
+        gap: 0.5rem;
+      }
+
+      .brand-symbol-group {
+        gap: 0.4rem;
+        font-size: 0.98rem;
+        white-space: nowrap;
+      }
+
+      .brand-square {
+        width: 28px;
+        height: 28px;
+      }
+
+      .brand-logo {
+        width: 30px;
+        height: 30px;
+      }
+
+      .mobile-menu-toggle {
+        display: inline-flex;
+        flex: 0 0 auto;
+        width: 36px;
+        height: 36px;
+      }
+
+      .nav-horizontal-links,
+      .nav-horizontal-links.is-open {
+        display: none;
+        position: absolute;
+        top: calc(100% + 0.75rem);
+        left: 0;
+        right: 0;
+        z-index: 20;
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: #111114;
+        border: 1px solid var(--chalk-line);
+        border-radius: 14px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      }
+
+      .nav-horizontal-links.is-open {
+        display: flex;
+      }
+
+      .nav-anchor {
+        padding: 0.9rem 0.25rem;
+        border-bottom: 1px solid var(--chalk-subtle);
+      }
+
+      .nav-anchor:last-child {
+        border-bottom: 0;
+      }
+
+      .nav-anchor.active::after {
+        display: none;
+      }
+
+      .nav-inner-row > div:last-child {
+        gap: 0.45rem !important;
+      }
+
+      .nav-inner-row > div:last-child > a {
+        display: none;
+      }
+
+      .nav-inner-row > div:last-child .btn-grind-action {
+        padding: 0.65rem 0.6rem;
+        font-size: 0.58rem;
+        white-space: nowrap;
+      }
+
+      .hero-editorial-block {
+        min-height: auto;
+        padding: 5rem 0 2rem;
+        background-position: 57% center;
+      }
+
+      .hero-editorial-block::before {
+        background:
+          linear-gradient(90deg, rgba(5, 5, 8, 0.88), rgba(5, 5, 8, 0.52)),
+          linear-gradient(0deg, rgba(5, 5, 8, 0.84), transparent 48%);
+      }
+
+      .hero-editorial-block .title-stacked-giant {
+        font-size: clamp(2.2rem, 10vw, 4.5rem);
+      }
+
+      .hero-tagline {
+        max-width: 24ch;
+        line-height: 1.2;
+        letter-spacing: 0.07em;
+      }
+
+      .hero-supporting-copy {
+        margin: 1.35rem 0 1.8rem;
+      }
+
+      .hero-scroll-cue {
+        margin-top: 2.25rem;
+      }
+
+      .metrics-row-strip {
+        gap: 1.5rem 1rem;
+      }
+
+      .metric-column p {
+        font-size: 0.68rem;
+      }
+
+      .programmes-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .split-sticky-grid {
+        row-gap: 0;
+      }
+
+      .sticky-pinned-col {
+        display: contents;
+      }
+
+      .approach-photo-stack {
+        position: sticky;
+        top: 4.5rem;
+        z-index: 0;
+        width: 100%;
+        height: calc(100vh - 4.5rem);
+        margin-bottom: calc(4.5rem - 100vh);
+      }
+
+      .sticky-split-section {
+        overflow: clip;
+      }
+
+      .approach-photo-stack::after {
+        background:
+          linear-gradient(180deg, rgba(5, 5, 8, 0.42), rgba(5, 5, 8, 0.67)),
+          linear-gradient(90deg, rgba(5, 5, 8, 0.2), rgba(5, 5, 8, 0.48));
+      }
+
+      .approach-photo {
+        object-position: center 36%;
+      }
+
+      .scroll-testimonials-column {
+        margin-top: 1.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .scroll-testimonials-column .thegrind-review-box {
+        background: rgba(8, 9, 13, 0.76);
+        backdrop-filter: blur(3px);
+      }
+
+      .programmes-heading .title-section-grind {
+        white-space: normal;
+        font-size: clamp(2.2rem, 9.2vw, 3.5rem);
+      }
+
+      .programmes-heading .programmes-controls {
+        padding: 0;
+      }
+
+      .grind-program-slide {
+        min-height: 410px;
+      }
+
+      .horizontal-reel {
+        position: relative;
+        min-height: 426px;
+        overflow: hidden;
+        padding: 0;
+        perspective: 1100px;
+        touch-action: pan-y;
+        scrollbar-width: none;
+      }
+
+      .horizontal-reel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .horizontal-reel .grind-program-slide {
+        display: none;
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 0;
+        height: 410px;
+        min-height: 410px;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        opacity: 0;
+      }
+
+      .horizontal-reel .grind-program-slide.is-active {
+        display: flex;
+        opacity: 1;
+        transform: none;
+      }
+
+      #programmes-reel .grind-program-slide.is-active .slide-tag,
+      #programmes-reel .grind-program-slide.is-active .slide-excerpt,
+      #programmes-reel .grind-program-slide.is-active .slide-bottom-meta {
+        opacity: 1;
+        transform: none;
+      }
+
+      #programmes-reel .grind-program-slide.is-active .slide-excerpt {
+        max-height: 10rem;
+        margin-bottom: 1rem;
+      }
+
+      #programmes-reel .grind-program-slide.is-active .slide-bottom-meta {
+        max-height: 5rem;
+        padding-top: 1.25rem;
+        border-top-color: var(--chalk-line);
+      }
+
+      .horizontal-reel .grind-program-slide.is-active.flip-forward {
+        animation: programmeFlipForward 560ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
+      }
+
+      .horizontal-reel .grind-program-slide.is-active.flip-backward {
+        animation: programmeFlipBackward 560ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
+      }
+    }
+
+    @keyframes programmeFlipForward {
+      from {
+        opacity: 0.35;
+        transform: rotateY(-72deg) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: rotateY(0) scale(1);
+      }
+    }
+
+    @keyframes programmeFlipBackward {
+      from {
+        opacity: 0.35;
+        transform: rotateY(72deg) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: rotateY(0) scale(1);
+      }
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 901;
+      pointer-events: none;
+      opacity: 0.12;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+    }
+
+    .site-nav-header {
+      background: rgba(8, 8, 9, 0.76);
+      border-bottom: 1px solid transparent;
+      border-image: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.02)) 1;
+      backdrop-filter: blur(20px) saturate(145%);
+      -webkit-backdrop-filter: blur(20px) saturate(145%);
+    }
+
+    .grind-program-slide::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        circle 260px at var(--pointer-x, 50%) var(--pointer-y, 50%),
+        rgba(49, 91, 255, 0.22),
+        transparent 72%
+      );
+      transition: opacity 350ms ease;
+    }
+
+    .grind-program-slide:hover::after,
+    .grind-program-slide:focus-visible::after {
+      opacity: 1;
+    }
+
+    .coach-profile-section {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .coach-profile-section::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      background: radial-gradient(
+        circle 340px at var(--pointer-x, 50%) var(--pointer-y, 50%),
+        rgba(49, 91, 255, 0.2),
+        transparent 72%
+      );
+      transition: opacity 350ms ease;
+    }
+
+    .coach-profile-section:hover::before {
+      opacity: 1;
+    }
+
+    .coach-profile-grid {
+      position: relative;
+      z-index: 1;
+    }
+
+    .curriculum-pillar-line {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .curriculum-pillar-line::before {
+      content: attr(data-step);
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: -0.35rem;
+      color: #fff;
+      font-family: var(--font-headline);
+      font-size: clamp(5rem, 11vw, 8rem);
+      line-height: 0.8;
+      opacity: 0.075;
+      pointer-events: none;
+      transform: translateY(-55%);
+    }
+
+    .curriculum-pillar-line .num-lead,
+    .curriculum-pillar-line > div:last-child {
+      position: relative;
+      z-index: 1;
+    }
+
+    .curriculum-pillar-line .num-lead {
+      flex: 0 0 auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .scroll-reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .horizontal-reel .grind-program-slide.is-active {
+        animation: none !important;
+      }
+
+      .ticker-belt {
+        animation: marqueeRun 32s linear infinite !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="first-visit-intro" id="first-visit-intro" aria-hidden="true">
+    <div class="first-visit-intro-wordmark">JONGA<br>BONITA</div>
+  </div>
+
+  <div class="scroll-progress-track" aria-hidden="true">
+    <span class="scroll-progress-bar"></span>
+  </div>
+
+  <!-- STICKY EDITORIAL NAVIGATION -->
+  <header class="site-nav-header">
+    <div class="container">
+      <div class="nav-inner-row">
+        <a href="#home" class="brand-symbol-group" onclick="routeToView('home', event)">
+          <img class="brand-logo" src="jonga-bonita-logo.png" alt="">
+          JONGA BONITA
+        </a>
+
+        <button class="mobile-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleMobileMenu()">
+          <span aria-hidden="true">☰</span>
+        </button>
+
+        <ul class="nav-horizontal-links">
+          <li class="nav-anchor active" id="menu-home" onclick="routeToView('home')">Overview</li>
+          <li class="nav-anchor" id="menu-programmes" onclick="routeToView('programmes')">Programmes</li>
+          <li class="nav-anchor" id="menu-booking" onclick="routeToView('booking')">Schedule &amp; Booking</li>
+          <li class="nav-anchor" id="menu-mentorship" onclick="routeToView('mentorship')">Mentorship &amp; Faith</li>
+          <li class="nav-anchor" id="menu-location" onclick="routeToView('location')">Thatchfield Base</li>
+        </ul>
+
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+          <a href="https://wa.me/27843472507" target="_blank" rel="noopener noreferrer" class="btn-grind-action btn-action-outline">
+            WhatsApp
+          </a>
+          <button class="btn-grind-action btn-action-blue" onclick="routeToView('booking')">
+            Book Assessment &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- RUNNING THE GRIND TICKER BAR -->
+  <div class="running-ticker-track">
+    <div class="ticker-belt" aria-label="Develop with purpose. On and off the pitch. Character, discipline, leadership, and faith in God. Thatchfield Sports Centre, Centurion.">
+      <div class="ticker-group">
+        <div class="ticker-statement">DEVELOP WITH PURPOSE <span class="divider">&bull;</span></div>
+        <div class="ticker-statement">ON AND OFF THE PITCH <span class="divider">&bull;</span></div>
+        <div class="ticker-statement">CHARACTER &bull; DISCIPLINE &bull; LEADERSHIP &bull; FAITH IN GOD <span class="divider">&bull;</span></div>
+        <div class="ticker-statement">THATCHFIELD SPORTS CENTRE, CENTURION <span class="divider">&bull;</span></div>
+      </div>
+      <div class="ticker-group" aria-hidden="true">
+        <div class="ticker-statement">DEVELOP WITH PURPOSE <span class="divider">&bull;</span></div>
+        <div class="ticker-statement">ON AND OFF THE PITCH <span class="divider">&bull;</span></div>
+        <div class="ticker-statement">CHARACTER &bull; DISCIPLINE &bull; LEADERSHIP &bull; FAITH IN GOD <span class="divider">&bull;</span></div>
+        <div class="ticker-statement">THATCHFIELD SPORTS CENTRE, CENTURION <span class="divider">&bull;</span></div>
+      </div>
+    </div>
+  </div>
+
+  <main id="app-viewport">
+    
+    <!-- =========================================================
+         PAGE 1: OVERVIEW / HOMEPAGE
+    ========================================================= -->
+    <section id="view-home" class="page-section-view active-view">
+      <!-- HERO BLOCK -->
+      <div class="hero-editorial-block">
+        <div class="container">
+          <div class="chalk-cross-tl">+</div>
+          <div class="chalk-cross-tr">+</div>
+          
+          <div class="hero-editorial-grid">
+            <!-- Left Headline -->
+            <div>
+              <div class="tag-category-pill">Football Development &amp; Mentorship Organisation</div>
+              <h1 class="title-stacked-giant">
+                JONGA<br>
+                <span class="blue-highlight">BONITA.</span>
+              </h1>
+              <h2 class="hero-tagline">PLAY BEAUTIFUL. DEVELOP WITH PURPOSE.</h2>
+              <p class="hero-supporting-copy">
+                We are a football development and mentorship organisation dedicated to developing technically gifted, tactically intelligent, disciplined and confident young footballers on and off the pitch.
+              </p>
+
+              <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                <button class="btn-grind-action btn-action-primary" onclick="routeToView('booking')">
+                  Book Player Assessment &rarr;
+                </button>
+                <button class="btn-grind-action btn-action-outline" onclick="routeToView('programmes')">
+                  Explore Programmes
+                </button>
+              </div>
+              <a class="hero-scroll-cue" href="#programmes" onclick="scrollToProgrammes(event)">Scroll to explore</a>
+            </div>
+
+          </div>
+
+          <!-- Numbers / Metric Four-Pillar Strip -->
+          <div class="metrics-row-strip">
+            <div class="metric-column">
+              <h3>TECHNICALLY<span class="symbol">.</span></h3>
+              <p>Gifted Ball Mastery</p>
+            </div>
+            <div class="metric-column">
+              <h3>TACTICALLY<span class="symbol">.</span></h3>
+              <p>Intelligent Football IQ</p>
+            </div>
+            <div class="metric-column">
+              <h3>DISCIPLINED<span class="symbol">.</span></h3>
+              <p>Character &amp; Leadership</p>
+            </div>
+            <div class="metric-column">
+              <h3>CONFIDENT<span class="symbol">.</span></h3>
+              <p>Faith in God on &amp; off Pitch</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE MISSION STATEMENT FULL BLEED BANNER -->
+      <section class="mission-callout-strip">
+        <div class="container">
+          <div class="tag-category-pill" style="justify-content: center; margin-bottom: 2rem;">Our Sacred Mission</div>
+          <blockquote class="mission-text-banner">
+            "OUR MISSION IS SIMPLE: <span class="blue-glow">TO DEVELOP BETTER FOOTBALLERS,</span> BUILD STRONGER INDIVIDUALS AND RAISE A GENERATION THAT <span class="blue-glow">PLAYS BEAUTIFUL</span> AND DEVELOPS WITH PURPOSE."
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- HORIZONTAL SCROLL CAROUSEL: PROGRAMMES & COACHING -->
+      <section class="horizontal-scroll-container" id="programmes">
+        <div class="container">
+          <div class="scroll-controls-bar programmes-heading">
+            <div class="programmes-title">
+              <div class="tag-category-pill">Structured Coaching &amp; Camps</div>
+              <h2 class="title-section-grind">
+                DEVELOPMENT PROGRAMMES <span class="blue-highlight">&amp; MENTORSHIP.</span>
+              </h2>
+            </div>
+            <div class="programmes-controls" style="display: flex; gap: 0.5rem;">
+              <button class="btn-grind-action btn-action-outline" onclick="scrollCarousel(-1)">&#8592; Prev</button>
+              <button class="btn-grind-action btn-action-outline" onclick="scrollCarousel(1)">Next &#8594;</button>
+            </div>
+          </div>
+
+          <!-- Interactive Scroll Snap Track -->
+          <div class="horizontal-track-wrapper">
+            <div class="horizontal-reel" id="programmes-reel">
+              
+              <!-- Slide 1: Individual Coaching -->
+              <div class="grind-program-slide" role="button" tabindex="0" onclick="loadProgramSubpage('individual')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();loadProgramSubpage('individual')}">
+                <div class="slide-media-holder">
+                  <span class="slide-tag">1-on-1 Coaching</span>
+                  <img src="programme-individual.jpg" alt="Coach mentoring a young footballer">
+                </div>
+                <div class="slide-body-content">
+                  <div>
+                    <h3 class="slide-title">Structured Individual Coaching</h3>
+                    <p class="slide-excerpt">
+                      Dedicated one-on-one technical mastery, weak-foot recalibration, biomechanical posture, and tailored player mentorship.
+                    </p>
+                  </div>
+                  <div class="slide-bottom-meta">
+                    <span>60 Min &bull; R450</span>
+                    <span class="view-link">Explore Pathway &rarr;</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2: Group Coaching -->
+              <div class="grind-program-slide" role="button" tabindex="0" onclick="loadProgramSubpage('group')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();loadProgramSubpage('group')}">
+                <div class="slide-media-holder">
+                  <span class="slide-tag">Squad Development</span>
+                  <img src="programme-group.jpg" alt="Players training together on the football pitch">
+                </div>
+                <div class="slide-body-content">
+                  <div>
+                    <h3 class="slide-title">Structured Group Coaching</h3>
+                    <p class="slide-excerpt">
+                      Developing tactically intelligent team shape, high-tempo combination passing, defensive organization, and collective discipline.
+                    </p>
+                  </div>
+                  <div class="slide-bottom-meta">
+                    <span>90 Min &bull; R350</span>
+                    <span class="view-link">Explore Pathway &rarr;</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3: Football Camps -->
+              <div class="grind-program-slide" role="button" tabindex="0" onclick="loadProgramSubpage('camps')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();loadProgramSubpage('camps')}">
+                <div class="slide-media-holder">
+                  <span class="slide-tag">High Performance Camps</span>
+                  <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=900&auto=format&fit=crop" alt="Football Camps">
+                </div>
+                <div class="slide-body-content">
+                  <div>
+                    <h3 class="slide-title">Holiday Football Camps</h3>
+                    <p class="slide-excerpt">
+                      Immersive multi-day training camps combining intense technical drills, match scenarios, leadership workshops, and life skills.
+                    </p>
+                  </div>
+                  <div class="slide-bottom-meta">
+                    <span>Seasonal &bull; R350 / Day</span>
+                    <span class="view-link">Explore Pathway &rarr;</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 4: Mentorship & Development -->
+              <div class="grind-program-slide" role="button" tabindex="0" onclick="loadProgramSubpage('mentorship-programme')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();loadProgramSubpage('mentorship-programme')}">
+                <div class="slide-media-holder">
+                  <span class="slide-tag">Character & Leadership</span>
+                  <img src="programme-mentorship.jpg" alt="Coach demonstrating a football drill">
+                </div>
+                <div class="slide-body-content">
+                  <div>
+                    <h3 class="slide-title">Player Mentorship &amp; Growth</h3>
+                    <p class="slide-excerpt">
+                      Dedicated sessions on character, emotional resilience, discipline, leadership, and walking in purposeful faith.
+                    </p>
+                  </div>
+                  <div class="slide-bottom-meta">
+                    <span>Holistic &bull; R250</span>
+                    <span class="view-link">Explore Pathway &rarr;</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE GRIND'S STICKY SPLIT: "OUR APPROACH GOES BEYOND FOOTBALL" -->
+      <section class="sticky-split-section">
+        <div class="approach-photo-stack" aria-hidden="true">
+          <img class="approach-photo is-active" src="approach-player-blue.jpg" alt="" loading="lazy">
+          <img class="approach-photo" src="approach-player-white.jpg" alt="" loading="lazy">
+        </div>
+        <div class="container">
+          <div class="split-sticky-grid">
+            <!-- Pinned Title Column on the Left -->
+            <div class="sticky-pinned-col">
+              <div class="tag-category-pill">On &amp; Off The Pitch</div>
+              <h2 class="title-section-grind">
+                OUR APPROACH<br>
+                GOES BEYOND<br>
+                <span class="blue-highlight">FOOTBALL.</span>
+              </h2>
+              <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.98rem; max-width: 340px; line-height: 1.7;">
+                Placing equal importance on character, discipline, leadership, personal growth and faith in God. We believe true greatness is built from the inside out.
+              </p>
+              <div style="margin-top: 2rem;">
+                <button class="btn-grind-action btn-action-blue" onclick="routeToView('booking')">
+                  Join The Generation &rarr;
+                </button>
+              </div>
+            </div>
+
+            <!-- Scrolling Pillars on the Right -->
+            <div class="scroll-testimonials-column">
+              <!-- Pillar 1 -->
+              <div class="thegrind-review-box" data-approach-image="0">
+                <div class="review-quote-headline">"Character &amp; Integrity In Every Action"</div>
+                <p class="review-copy-body">
+                  Football is a mirror of life. How an athlete responds to a referee’s whistle, a mistake, or a teammate’s struggle reveals their inner character. We instill accountability, honesty, and sportsmanship so our players command respect everywhere they go.
+                </p>
+                <div class="review-author-row">
+                  <span>&bull; Pillar 01: Character Development</span>
+                </div>
+              </div>
+
+              <!-- Pillar 2 -->
+              <div class="thegrind-review-box" data-approach-image="1">
+                <div class="review-quote-headline">"Discipline &amp; Relentless Personal Growth"</div>
+                <p class="review-copy-body">
+                  Talent without discipline is wasted potential. Through structured coaching and high standards at Thatchfield grounds, players learn that self-control, punctual habits, and consistent effort are the keys to breakthrough both academically and athletically.
+                </p>
+                <div class="review-author-row">
+                  <span>&bull; Pillar 02: Discipline &amp; Self-Mastery</span>
+                </div>
+              </div>
+
+              <!-- Pillar 3 -->
+              <div class="thegrind-review-box" data-approach-image="0">
+                <div class="review-quote-headline">"Leadership &amp; Elevating Those Around You"</div>
+                <p class="review-copy-body">
+                  We raise athletes who do not shrink from responsibility. Our mentorship instills voice, empathy, and positive influence, empowering young footballers to be role models in their schools, families, and communities.
+                </p>
+                <div class="review-author-row">
+                  <span>&bull; Pillar 03: Purposeful Leadership</span>
+                </div>
+              </div>
+
+              <!-- Pillar 4 -->
+              <div class="thegrind-review-box" data-approach-image="1">
+                <div class="review-quote-headline">"Confidence &amp; Unshakable Faith in God"</div>
+                <p class="review-copy-body">
+                  When players understand who they are and recognize their God-given gifts, fear of failure dissolves. We nurture a deep-rooted spiritual foundation that gives young athletes peace under pressure and courage to play beautiful.
+                </p>
+                <div class="review-author-row">
+                  <span>&bull; Pillar 04: Faith in God &amp; Core Confidence</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COACH PROFILE -->
+      <section class="coach-profile-section">
+        <div class="container coach-profile-grid">
+          <figure class="coach-profile-portrait">
+            <img src="coach-omphile.jpg" alt="Coach Omphile on the football pitch" loading="lazy">
+          </figure>
+
+          <div class="coach-profile-copy">
+            <div class="tag-category-pill">Meet the Coach</div>
+            <h2 class="title-section-grind">COACH<br><span class="blue-highlight">OMPHILE.</span></h2>
+            <p class="coach-profile-intro">
+              Developing footballers with skill, intelligence, discipline, and purpose.
+            </p>
+            <p class="coach-profile-detail">
+              Coach Omphile leads Jonga Bonita's football development and mentorship at Thatchfield Sports Centre. His coaching brings together structured technical training, tactical understanding, and personal growth on and off the pitch.
+            </p>
+            <button class="btn-grind-action btn-action-blue" onclick="routeToView('booking')">
+              Train with Coach Omphile &rarr;
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ ACCORDION -->
+      <section class="faq-wrapper-section">
+        <div class="container">
+          <div class="tag-category-pill">Everything You Need To Know</div>
+          <h2 class="title-section-grind">FREQUENTLY ASKED<br><span class="blue-highlight">QUESTIONS.</span></h2>
+
+          <div class="faq-list-stack">
+            <div class="faq-accordion-row">
+              <div class="faq-accordion-header" onclick="toggleAccordion(this)">
+                <span>What makes Jonga Bonita different from regular football clubs?</span>
+                <span class="accordion-sign">+</span>
+              </div>
+              <div class="faq-accordion-drawer">
+                We are a football development and mentorship organisation. While we train players to be technically gifted and tactically intelligent, our approach places equal weight on character, discipline, leadership, and faith in God. We develop the complete individual on and off the pitch.
+              </div>
+            </div>
+
+            <div class="faq-accordion-row">
+              <div class="faq-accordion-header" onclick="toggleAccordion(this)">
+                <span>Where are your coaching sessions and camps held?</span>
+                <span class="accordion-sign">+</span>
+              </div>
+              <div class="faq-accordion-drawer">
+                All training programmes, individual coaching, and holiday football camps take place at our base: Thatchfield Sports Centre, Brakfontein Rd, Centurion, GP, South Africa.
+              </div>
+            </div>
+
+            <div class="faq-accordion-row">
+              <div class="faq-accordion-header" onclick="toggleAccordion(this)">
+                <span>What age groups and skill levels do you mentor?</span>
+                <span class="accordion-sign">+</span>
+              </div>
+              <div class="faq-accordion-drawer">
+                We work with young footballers across grassroots discovery (ages 7-11), competitive youth squads (ages 12-16), and senior pathway players (ages 17+), offering both individual 1-on-1 coaching and structured group development programmes.
+              </div>
+            </div>
+
+            <div class="faq-accordion-row">
+              <div class="faq-accordion-header" onclick="toggleAccordion(this)">
+                <span>How does faith in God integrate into training?</span>
+                <span class="accordion-sign">+</span>
+              </div>
+              <div class="faq-accordion-drawer">
+                Faith is not treated as an afterthought; it is our foundation. We teach players to honor God with their work ethic, treat others with love and respect, play without fear, and understand their identity beyond sports statistics.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- =========================================================
+         PAGE 2: COMPLETE PROGRAMMES DIRECTORY VIEW
+    ========================================================= -->
+    <section id="view-programmes" class="page-section-view">
+      <div class="container" style="padding-top: 5rem; padding-bottom: 6rem;">
+        <div class="tag-category-pill">Coaching &amp; Mentorship Pathways</div>
+        <h1 class="title-stacked-giant">OUR DEVELOPMENT<br><span class="blue-highlight">PROGRAMMES.</span></h1>
+        <p style="color: var(--text-muted); max-width: 650px; margin: 1.5rem 0 3.5rem; font-size: 1.05rem;">
+          Through structured individual and group coaching, player development, mentorship, football camps and development programmes, we aim to help players reach their full potential both on and off the pitch.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+          <!-- Programme 1 -->
+          <div class="grind-program-slide" onclick="loadProgramSubpage('individual')">
+            <div class="slide-media-holder">
+              <span class="slide-tag">1-on-1 Mastery</span>
+              <img src="programme-individual.jpg" alt="Coach mentoring a young footballer">
+            </div>
+            <div class="slide-body-content">
+              <div>
+                <h3 class="slide-title">Structured Individual Coaching</h3>
+                <p class="slide-excerpt">Technical giftedness, biomechanical striking correction, positional intelligence, and personal mentorship.</p>
+              </div>
+              <div class="slide-bottom-meta">
+                <span>R450 / Session</span>
+                <span class="view-link">Open Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Programme 2 -->
+          <div class="grind-program-slide" onclick="loadProgramSubpage('group')">
+            <div class="slide-media-holder">
+              <span class="slide-tag">Squad Development</span>
+              <img src="programme-group.jpg" alt="Players training together on the football pitch">
+            </div>
+            <div class="slide-body-content">
+              <div>
+                <h3 class="slide-title">Structured Group Coaching</h3>
+                <p class="slide-excerpt">Tactical intelligence under match pressure, high-speed combination play, pressing triggers, and squad discipline.</p>
+              </div>
+              <div class="slide-bottom-meta">
+                <span>R350 / Session</span>
+                <span class="view-link">Open Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Programme 3 -->
+          <div class="grind-program-slide" onclick="loadProgramSubpage('camps')">
+            <div class="slide-media-holder">
+              <span class="slide-tag">Holiday Camps</span>
+              <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=900&auto=format&fit=crop" alt="Football Camps">
+            </div>
+            <div class="slide-body-content">
+              <div>
+                <h3 class="slide-title">Football Camps &amp; Intensives</h3>
+                <p class="slide-excerpt">Multi-day high-performance camps focused on skills acceleration, leadership workshops, and character building.</p>
+              </div>
+              <div class="slide-bottom-meta">
+                <span>R350 / Day</span>
+                <span class="view-link">Open Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Programme 4 -->
+          <div class="grind-program-slide" onclick="loadProgramSubpage('mentorship-programme')">
+            <div class="slide-media-holder">
+              <span class="slide-tag">Character &amp; Faith</span>
+              <img src="programme-mentorship.jpg" alt="Coach demonstrating a football drill">
+            </div>
+            <div class="slide-body-content">
+              <div>
+                <h3 class="slide-title">Player Mentorship &amp; Growth</h3>
+                <p class="slide-excerpt">Holistic mentorship targeting leadership, discipline, confidence, personal growth, and walking with God.</p>
+              </div>
+              <div class="slide-bottom-meta">
+                <span>R250 / Session</span>
+                <span class="view-link">Open Details &rarr;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 3: DEDICATED PROGRAMME SUB-PAGE (DYNAMIC VIEW)
+    ========================================================= -->
+    <section id="view-programme-detail" class="page-section-view">
+      <div class="program-deepdive-wrapper">
+        <div class="container">
+          <div style="margin-bottom: 2.5rem;">
+            <button class="btn-grind-action btn-action-outline" onclick="goBackToPreviousView()">
+              &larr; Back to Previous Page
+            </button>
+          </div>
+
+          <div class="deepdive-grid">
+            <!-- Left Info Column -->
+            <div>
+              <div class="tag-category-pill" id="subpage-tier-badge">Programme Details</div>
+              <h1 class="title-stacked-giant" id="subpage-title">Structured Individual Coaching</h1>
+              <p id="subpage-desc" style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.8; margin-top: 1.5rem;">
+                Through structured individual coaching, we cultivate technically gifted, tactically intelligent, disciplined and confident young footballers who play beautiful and develop with purpose.
+              </p>
+
+              <div class="specs-matrix-row">
+                <div class="spec-matrix-cell">
+                  <h5>Facility Grounds</h5>
+                  <p id="subpage-venue">Thatchfield Turf A</p>
+                </div>
+                <div class="spec-matrix-cell">
+                  <h5>Session Duration</h5>
+                  <p id="subpage-duration">60 Minutes</p>
+                </div>
+                <div class="spec-matrix-cell">
+                  <h5>Coaching Density</h5>
+                  <p id="subpage-ratio">1 Coach : 1 Athlete</p>
+                </div>
+                <div class="spec-matrix-cell">
+                  <h5>Schedule Matrix</h5>
+                  <p>Mon &ndash; Sun (10am&ndash;6pm)</p>
+                </div>
+              </div>
+
+              <div>
+                <h4 style="font-family: var(--font-headline); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 1.5rem;">
+                  Our Four Core Pillars
+                </h4>
+                <div class="curriculum-pillar-line" data-step="01">
+                  <div class="num-lead">01</div>
+                  <div><strong>Technically Gifted Ball Mastery:</strong> Developing exquisite close-control, bilateral passing dexterity, and creative attacking flair.</div>
+                </div>
+                <div class="curriculum-pillar-line" data-step="02">
+                  <div class="num-lead">02</div>
+                  <div><strong>Tactically Intelligent Vision:</strong> Scanning before reception, understanding positional geometry, and making quick decisions.</div>
+                </div>
+                <div class="curriculum-pillar-line" data-step="03">
+                  <div class="num-lead">03</div>
+                  <div><strong>Discipline &amp; Character:</strong> Demanding high standards of conduct, work ethic, and humility on and off the pitch.</div>
+                </div>
+                <div class="curriculum-pillar-line" data-step="04">
+                  <div class="num-lead">04</div>
+                  <div><strong>Confidence &amp; Faith in God:</strong> Raising fearless young leaders anchored in spiritual strength, playing with joy and purpose.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Sticky Booking Card -->
+            <div>
+              <div class="sticky-enrollment-card">
+                <div class="tag-category-pill">Direct Enrollment</div>
+                <div class="price-value-huge" id="subpage-price">R450 <span class="period">/ single session</span></div>
+                <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.8rem;">
+                  Includes baseline skill diagnostic, personalized video feedback, and player mentorship debrief at Thatchfield grounds.
+                </p>
+
+                <button class="btn-grind-action btn-action-blue" style="width: 100%; justify-content: center;" onclick="bookSelectedProgramme()">
+                  Proceed to Schedule &rarr;
+                </button>
+                
+                <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--chalk-line); text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+                  WhatsApp Coaching Staff: <a href="tel:+27843472507" style="color: #fff; font-weight: 700;">+27 84 347 2507</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 4: INTEGRATED BOOKING SYSTEM & MAP
+    ========================================================= -->
+    <section id="view-booking" class="page-section-view">
+      <div class="booking-system-wrapper">
+        <div class="container">
+          <div class="tag-category-pill">Live Schedule &bull; Centurion Base</div>
+          <h1 class="title-stacked-giant">SCHEDULE YOUR<br><span class="blue-highlight">SESSION.</span></h1>
+          <p style="color: var(--text-muted); max-width: 580px; margin-top: 1rem;">
+            Reserve your structured coaching, assessment, or mentorship slot at Thatchfield Sports Centre.
+          </p>
+
+          <div class="booking-system-layout">
+            <!-- Left: Calendar & Slot Picker -->
+            <div>
+              <div class="calendar-panel">
+                <div class="calendar-month-bar">
+                  <h4>November 2026</h4>
+                  <span style="font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; color: var(--brand-blue);">
+                    THATCHFIELD GROUNDS
+                  </span>
+                </div>
+
+                <div class="days-header-strip">
+                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+
+                <div class="calendar-days-array" id="calendar-days-grid">
+                  <!-- Populated by JavaScript -->
+                </div>
+
+                <div class="tag-category-pill" style="margin: 2rem 0 1rem;">Available Training Slots</div>
+                <div class="slot-cards-grid">
+                  <div class="slot-row-card active" onclick="pickTimeSlot(this, '10:00 AM')">
+                    <div>
+                      <strong>10:00 AM</strong>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">Morning Technical Block</div>
+                    </div>
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--brand-blue); background: var(--brand-blue-subtle); padding: 0.2rem 0.5rem; border-radius: 2px;">OPEN</span>
+                  </div>
+
+                  <div class="slot-row-card" onclick="pickTimeSlot(this, '11:30 AM')">
+                    <div>
+                      <strong>11:30 AM</strong>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">Tactical &amp; Position Specific</div>
+                    </div>
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--brand-blue); background: var(--brand-blue-subtle); padding: 0.2rem 0.5rem; border-radius: 2px;">OPEN</span>
+                  </div>
+
+                  <div class="slot-row-card" onclick="pickTimeSlot(this, '02:00 PM')">
+                    <div>
+                      <strong>02:00 PM</strong>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">Mentorship &amp; Ball Mastery</div>
+                    </div>
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--brand-blue); background: var(--brand-blue-subtle); padding: 0.2rem 0.5rem; border-radius: 2px;">OPEN</span>
+                  </div>
+
+                  <div class="slot-row-card" onclick="pickTimeSlot(this, '04:30 PM')">
+                    <div>
+                      <strong>04:30 PM</strong>
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">Squad Matchplay &amp; Leadership</div>
+                    </div>
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--brand-blue); background: var(--brand-blue-subtle); padding: 0.2rem 0.5rem; border-radius: 2px;">OPEN</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Checkout & Registration Form -->
+            <div>
+              <div class="reservation-checkout-card">
+                <h3 style="font-family: var(--font-headline); font-size: 1.45rem; text-transform: uppercase; margin-bottom: 1.5rem;">
+                  Player Enrollment
+                </h3>
+
+                <form onsubmit="handleReservationSubmit(event)">
+                  <div class="checkout-form-group">
+                    <label class="checkout-field-label">Select Development Programme</label>
+                    <select class="checkout-select" id="form-tier-selector" onchange="syncReceiptState()">
+                      <option value="individual" data-price="450">Structured Individual Coaching (1-on-1) &bull; R450</option>
+                      <option value="group" data-price="350">Structured Group Coaching &bull; R350</option>
+                      <option value="camps" data-price="350">Holiday Football Camp &bull; R350</option>
+                      <option value="mentorship-programme" data-price="250">Player Mentorship &amp; Growth &bull; R250</option>
+                    </select>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="checkout-form-group">
+                      <label class="checkout-field-label">Player Name</label>
+                      <input type="text" class="checkout-input" placeholder="Kagiso" required>
+                    </div>
+                    <div class="checkout-form-group">
+                      <label class="checkout-field-label">Player Surname</label>
+                      <input type="text" class="checkout-input" placeholder="Mokoena" required>
+                    </div>
+                  </div>
+
+                  <div class="checkout-form-group">
+                    <label class="checkout-field-label">Parent / Guardian Email</label>
+                    <input type="email" class="checkout-input" placeholder="parent@domain.com" required>
+                  </div>
+
+                  <div class="checkout-form-group">
+                    <label class="checkout-field-label">WhatsApp Contact (+27)</label>
+                    <input type="tel" class="checkout-input" placeholder="+27 84 000 0000" required>
+                  </div>
+
+                  <!-- Receipt Summary -->
+                  <div class="reservation-summary-receipt">
+                    <div class="receipt-line-item">
+                      <span>Venue:</span>
+                      <strong style="color: #fff;">Thatchfield Sports Centre</strong>
+                    </div>
+                    <div class="receipt-line-item">
+                      <span>Scheduled Slot:</span>
+                      <strong id="receipt-datetime-str" style="color: #fff;">Wed 04 Nov &bull; 10:00 AM</strong>
+                    </div>
+                    <div class="receipt-line-item total-line">
+                      <span>Total Investment:</span>
+                      <span id="receipt-price-val" style="color: var(--brand-blue);">R450.00</span>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn-grind-action btn-action-blue" style="width: 100%; justify-content: center;">
+                    Confirm Academy Reservation &rarr;
+                  </button>
+                </form>
+
+                <div id="booking-confirmation-banner" style="display: none; background: rgba(49, 91, 255, 0.12); border: 1px solid var(--brand-blue); padding: 1.25rem; border-radius: var(--radius-card); margin-top: 1.5rem;">
+                  <strong style="color: #fff; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;">
+                    &#10003; Session Successfully Scheduled
+                  </strong>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">
+                    Your spot is secured at Thatchfield Sports Centre. We look forward to partnering in developing a player who plays beautiful and develops with purpose.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INTEGRATED MAP & DIRECT CONTACT INFORMATION -->
+          <div class="thatchfield-ground-section" id="thatchfield-map-anchor">
+            <div class="tag-category-pill">Grounds &amp; Facility</div>
+            <h2 class="title-section-grind">THATCHFIELD SPORTS CENTRE<br><span class="blue-highlight">CENTURION, GP</span></h2>
+
+            <div class="thatchfield-map-layout">
+              <div class="map-frame-box">
+                <iframe 
+                  title="Thatchfield Sports Centre Centurion Map"
+                  src="https://maps.google.com/maps?q=Thatchfield%20Sports%20Centre,%20Brakfontein%20Rd,%20Centurion,%200157,%20South%20Africa&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  loading="lazy">
+                </iframe>
+              </div>
+
+              <div>
+                <h3 style="font-family: var(--font-headline); font-size: 1.6rem; text-transform: uppercase; margin-bottom: 1.5rem;">
+                  Get In Touch
+                </h3>
+
+                <div class="contact-item-box">
+                  <div class="contact-square-icon">&#9742;</div>
+                  <div>
+                    <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Phone &amp; WhatsApp</div>
+                    <a href="tel:+27843472507" style="font-size: 1.1rem; font-weight: 700; color: #fff;">+27 84 347 2507</a>
+                  </div>
+                </div>
+
+                <div class="contact-item-box">
+                  <div class="contact-square-icon">&#9993;</div>
+                  <div>
+                    <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Direct Email</div>
+                    <a href="mailto:jonga.bonita@gmail.com" style="font-size: 1.1rem; font-weight: 700; color: #fff;">jonga.bonita@gmail.com</a>
+                  </div>
+                </div>
+
+                <div class="contact-item-box">
+                  <div class="contact-square-icon">&#9678;</div>
+                  <div>
+                    <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Physical Grounds</div>
+                    <p style="font-size: 1rem; font-weight: 600; color: #fff;">
+                      Thatchfield Grounds, Brakfontein Rd, Centurion, GP, South Africa, 0157
+                    </p>
+                  </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--chalk-line);">
+                  <div style="font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 800; color: var(--brand-blue); margin-bottom: 0.4rem;">
+                    Coaching &amp; Facility Hours (Monday &ndash; Sunday)
+                  </div>
+                  <table class="hours-table-grind">
+                    <tr><td>Monday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                    <tr><td>Tuesday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                    <tr><td>Wednesday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                    <tr><td>Thursday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                    <tr><td>Friday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                    <tr><td>Saturday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                    <tr><td>Sunday</td><td class="time-right">10:00am &mdash; 6:00pm</td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 5: MENTORSHIP & FAITH PHILOSOPHY
+    ========================================================= -->
+    <section id="view-mentorship" class="page-section-view">
+      <div class="container" style="padding-top: 5rem; padding-bottom: 6rem;">
+        <div style="display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 5rem; align-items: flex-start;">
+          <div>
+            <div class="tag-category-pill">Our Core Conviction</div>
+            <h1 class="title-stacked-giant">BEYOND<br>THE PITCH.<br><span class="blue-highlight">ROOTED IN FAITH.</span></h1>
+            
+            <div style="margin-top: 3.5rem;">
+              <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 0.5rem; font-weight: 800;">
+                Mentorship Leadership
+              </div>
+              <h3 style="font-family: var(--font-headline); font-size: 1.8rem; text-transform: uppercase;">Jonga Bonita Coaching Staff</h3>
+              <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.25rem;">Thatchfield Sports Centre, Centurion</p>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 1.15rem; line-height: 1.8; color: var(--text-muted);">
+              <strong>Jonga Bonita – Play Beautiful</strong> was birthed out of a profound commitment to raising young athletes who are not only formidable on the ball, but who carry moral strength, unshakable faith, and leadership into every area of their lives.
+            </p>
+
+            <div style="font-family: var(--font-headline); font-size: 2.1rem; line-height: 1.1; text-transform: uppercase; color: var(--text-white); padding-left: 2rem; border-left: 4px solid var(--brand-blue); margin: 2.5rem 0;">
+              "Our mission is simple: To develop better footballers, build stronger individuals and raise a generation that plays beautiful and develops with purpose."
+            </div>
+
+            <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.8rem;">
+              Through structured individual and group coaching, mentorship, and development camps at Thatchfield, we teach young players that their worth is not determined by the scoreline, but by their God-given identity.
+            </p>
+
+            <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-muted);">
+              When discipline meets technical brilliance and faith in God, fear vanishes. Players develop authentic confidence, honor their families, and inspire their communities.
+            </p>
+
+            <div style="margin-top: 3rem;">
+              <button class="btn-grind-action btn-action-blue" onclick="routeToView('booking')">
+                Join Jonga Bonita Today &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         PAGE 6: THATCHFIELD BASE DEDICATED VIEW
+    ========================================================= -->
+    <section id="view-location" class="page-section-view">
+      <div class="container" style="padding-top: 5rem; padding-bottom: 6rem;">
+        <div class="tag-category-pill">Our Permanent Home</div>
+        <h1 class="title-stacked-giant">THATCHFIELD<br><span class="blue-highlight">SPORTS CENTRE.</span></h1>
+        <p style="color: var(--text-muted); max-width: 620px; margin: 1.5rem 0 3.5rem; font-size: 1.05rem;">
+          Centurion's benchmark sports venue. Featuring pristine pitches, dedicated training cages, floodlights, and player mentoring facilities.
+        </p>
+
+        <div class="thatchfield-map-layout">
+          <div class="map-frame-box">
+            <iframe 
+              title="Thatchfield Sports Centre Centurion Map Detail"
+              src="https://maps.google.com/maps?q=Thatchfield%20Sports%20Centre,%20Brakfontein%20Rd,%20Centurion,%200157,%20South%20Africa&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              loading="lazy">
+            </iframe>
+          </div>
+
+          <div class="reservation-checkout-card">
+            <h3 style="font-family: var(--font-headline); font-size: 1.6rem; text-transform: uppercase; margin-bottom: 1.5rem;">
+              Ground Details
+            </h3>
+
+            <div class="contact-item-box">
+              <div class="contact-square-icon">&#9678;</div>
+              <div>
+                <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Location</div>
+                <strong style="color: #fff; font-size: 1.05rem;">Thatchfield Grounds, Centurion, GP, 0157</strong>
+              </div>
+            </div>
+
+            <div class="contact-item-box">
+              <div class="contact-square-icon">&#9742;</div>
+              <div>
+                <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Direct Line</div>
+                <a href="tel:+27843472507" style="color: var(--brand-blue); font-size: 1.05rem; font-weight: 700;">+27 84 347 2507</a>
+              </div>
+            </div>
+
+            <div class="contact-item-box">
+              <div class="contact-square-icon">&#9993;</div>
+              <div>
+                <div style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);">Direct Email</div>
+                <a href="mailto:jonga.bonita@gmail.com" style="color: #fff; font-size: 1.05rem; font-weight: 700;">jonga.bonita@gmail.com</a>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+              <button class="btn-grind-action btn-action-blue" style="width: 100%; justify-content: center;" onclick="routeToView('booking')">
+                Schedule Pitch Session &rarr;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer-block">
+    <div class="container">
+      <div class="footer-columns-grid">
+        <div>
+          <div class="brand-symbol-group" style="margin-bottom: 1rem;">
+            <img class="brand-logo" src="jonga-bonita-logo.png" alt="">
+            JONGA BONITA
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; max-width: 340px;">
+            A football development and mentorship organisation. Developing technically gifted, tactically intelligent, disciplined and confident young footballers at Thatchfield Sports Centre, Centurion.
+          </p>
+        </div>
+
+        <div>
+          <h5>Quick Links</h5>
+          <ul class="footer-nav-list">
+            <li><a href="#home" onclick="routeToView('home', event)">Overview</a></li>
+            <li><a href="#programmes" onclick="routeToView('programmes', event)">Programmes</a></li>
+            <li><a href="#booking" onclick="routeToView('booking', event)">Schedule Session</a></li>
+            <li><a href="#mentorship" onclick="routeToView('mentorship', event)">Mentorship &amp; Faith</a></li>
+            <li><a href="#location" onclick="routeToView('location', event)">Thatchfield Base</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Programmes</h5>
+          <ul class="footer-nav-list">
+            <li><a href="#detail" onclick="loadProgramSubpage('individual', event)">Individual Coaching (1-on-1)</a></li>
+            <li><a href="#detail" onclick="loadProgramSubpage('group', event)">Structured Group Coaching</a></li>
+            <li><a href="#detail" onclick="loadProgramSubpage('camps', event)">Holiday Football Camps</a></li>
+            <li><a href="#detail" onclick="loadProgramSubpage('mentorship-programme', event)">Mentorship &amp; Growth</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Thatchfield Base</h5>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8;">
+            Thatchfield Grounds<br>
+            Centurion, GP, South Africa, 0157<br>
+            <strong style="color: #fff;">+27 84 347 2507</strong><br>
+            jonga.bonita@gmail.com<br>
+            Mon &ndash; Sun: 10:00am &ndash; 6:00pm
+          </p>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid var(--chalk-subtle); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark-muted); font-size: 0.78rem; flex-wrap: wrap; gap: 1rem;">
+        <div>&copy; 2026 JONGA BONITA — PLAY BEAUTIFUL. ALL RIGHTS RESERVED.</div>
+        <div style="letter-spacing: 0.12em; text-transform: uppercase;">DEVELOP WITH PURPOSE &bull; CENTURION, GP</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       ROUTER, SCROLL CONTROLLER & BOOKING SCRIPT
+  ========================================================= -->
+  <script>
+    // Detailed Programme Registry Matching the New Ethos
+    const PROGRAMME_REGISTRY = {
+      'individual': {
+        title: 'Structured Individual Coaching',
+        tier: '1-on-1 Player Development &bull; All Ages',
+        desc: 'Dedicated one-on-one coaching and mentorship designed to develop technically gifted ball mastery, sharp tactical habits, and personal character on and off the pitch.',
+        duration: '60 Minutes',
+        venue: 'Turf Pitch A &bull; Thatchfield',
+        ratio: '1 Coach : 1 Athlete',
+        price: 'R450'
+      },
+      'group': {
+        title: 'Structured Group Coaching',
+        tier: 'Academy &amp; Squad Pathways &bull; U7 to Senior',
+        desc: 'Group training focused on tactical intelligence under pressure, combination play, pressing cues, team discipline, and building unshakeable collective confidence.',
+        duration: '90 Minutes',
+        venue: 'Main Stadium Pitch &bull; Thatchfield',
+        ratio: '1 Coach : 8 Athletes',
+        price: 'R350'
+      },
+      'camps': {
+        title: 'Holiday Football Camps & Intensives',
+        tier: 'Holiday High-Performance Camps',
+        desc: 'Multi-day immersion camps uniting technical skills acceleration, competitive scrimmages, leadership workshops, and life skills grounded in discipline and faith.',
+        duration: 'Full Day (9:00am - 3:00pm)',
+        venue: 'Full Facility &bull; Thatchfield',
+        ratio: '1 Coach : 8 Athletes',
+        price: 'R350'
+      },
+      'mentorship-programme': {
+        title: 'Player Mentorship & Growth',
+        tier: 'Mentorship &bull; Character &amp; Faith',
+        desc: 'Equipping players beyond football by placing equal importance on character, discipline, leadership, personal growth, and faith in God.',
+        duration: '60 Minutes',
+        venue: 'Mentorship Suite &bull; Thatchfield',
+        ratio: 'Small Groups / 1-on-1',
+        price: 'R250'
+      }
+    };
+
+    let currentSelectedDate = 'Wed 04 Nov';
+    let currentSelectedSlot = '10:00 AM';
+    let activeProgrammeKey = 'individual';
+    let mobileProgrammeIndex = 0;
+    let programmeSwipeStart = null;
+    let suppressProgrammeCardClick = false;
+
+    // Page Router
+    function renderRoute(viewKey, programmeKey) {
+      if (viewKey === 'programme-detail' && programmeKey && PROGRAMME_REGISTRY[programmeKey]) {
+        activeProgrammeKey = programmeKey;
+        const data = PROGRAMME_REGISTRY[programmeKey];
+        document.getElementById('subpage-title').innerText = data.title;
+        document.getElementById('subpage-tier-badge').innerHTML = data.tier;
+        document.getElementById('subpage-desc').innerText = data.desc;
+        document.getElementById('subpage-venue').innerText = data.venue;
+        document.getElementById('subpage-duration').innerText = data.duration;
+        document.getElementById('subpage-ratio').innerText = data.ratio;
+        document.getElementById('subpage-price').innerHTML = `${data.price} <span class="period">/ session</span>`;
+      }
+
+      document.querySelectorAll('.page-section-view').forEach(view => {
+        view.classList.toggle('active-view', view.id === `view-${viewKey}`);
+      });
+      document.querySelectorAll('.nav-anchor').forEach(item => {
+        item.classList.toggle('active', item.id === `menu-${viewKey}`);
+      });
+
+      closeMobileMenu();
+    }
+
+    function routeToView(viewKey, event = null, options = {}) {
+      if (event) event.preventDefault();
+      const target = document.getElementById(`view-${viewKey}`);
+      if (!target) return;
+
+      const currentState = window.history.state;
+      const programmeKey = options.programmeKey ||
+        (viewKey === 'programme-detail' ? activeProgrammeKey : null);
+      const isSameRoute = currentState?.jongaBonitaRoute &&
+        currentState.viewKey === viewKey &&
+        currentState.programmeKey === programmeKey;
+
+      if (!isSameRoute) {
+        if (currentState?.jongaBonitaRoute) {
+          window.history.replaceState({
+            ...currentState,
+            scrollY: window.scrollY
+          }, '', window.location.href);
+        }
+
+        const entryIndex = currentState?.jongaBonitaRoute ? (Number(currentState.entryIndex) || 0) + 1 : 1;
+        const nextUrl = `#${viewKey}`;
+        const nextState = {
+          jongaBonitaRoute: true,
+          viewKey,
+          programmeKey,
+          entryIndex,
+          scrollY: 0
+        };
+        if (options.replaceHistory) {
+          window.history.replaceState(nextState, '', nextUrl);
+        } else {
+          window.history.pushState(nextState, '', nextUrl);
+        }
+      }
+
+      renderRoute(viewKey, programmeKey);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBackToPreviousView() {
+      const currentState = window.history.state;
+      if (currentState?.jongaBonitaRoute && currentState.entryIndex > 0) {
+        window.history.back();
+      } else {
+        routeToView('programmes', null, { replaceHistory: true });
+      }
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.querySelector('.nav-horizontal-links');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      const isOpen = menu.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      toggle.querySelector('span').innerText = isOpen ? '×' : '☰';
+    }
+
+    function closeMobileMenu() {
+      const menu = document.querySelector('.nav-horizontal-links');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      if (!menu || !toggle) return;
+      menu.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      toggle.querySelector('span').innerText = '☰';
+    }
+
+    function scrollToProgrammes(event) {
+      event.preventDefault();
+      document.getElementById('programmes').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Load Programme Deep-Dive Sub-page
+    function loadProgramSubpage(progKey, event = null) {
+      if (!PROGRAMME_REGISTRY[progKey]) return;
+      routeToView('programme-detail', event, { programmeKey: progKey });
+    }
+
+    // Direct CTA into Booking from Programme Sub-page
+    function bookSelectedProgramme() {
+      const selectBox = document.getElementById('form-tier-selector');
+      if (selectBox) {
+        selectBox.value = activeProgrammeKey;
+        syncReceiptState();
+      }
+      routeToView('booking');
+    }
+
+    // The Grind Horizontal Reel Carousel Scroll Controller
+    function scrollCarousel(direction) {
+      const reel = document.getElementById('programmes-reel');
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        showMobileProgramme(direction);
+        return;
+      }
+      const cardWidth = reel.querySelector('.grind-program-slide').offsetWidth + 24;
+      reel.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function syncMobileProgrammeCarousel() {
+      const cards = Array.from(document.querySelectorAll('#programmes-reel .grind-program-slide'));
+      if (!cards.length) return;
+
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        const activeIndex = cards.findIndex(card => card.classList.contains('is-active'));
+        if (activeIndex >= 0) mobileProgrammeIndex = activeIndex;
+        if (mobileProgrammeIndex >= cards.length) mobileProgrammeIndex = 0;
+        cards.forEach((card, index) => {
+          card.classList.toggle('is-active', index === mobileProgrammeIndex);
+          card.setAttribute('aria-hidden', String(index !== mobileProgrammeIndex));
+        });
+      } else {
+        cards.forEach(card => {
+          card.classList.remove('is-active', 'flip-forward', 'flip-backward');
+          card.removeAttribute('aria-hidden');
+        });
+      }
+    }
+
+    function showMobileProgramme(direction) {
+      const cards = Array.from(document.querySelectorAll('#programmes-reel .grind-program-slide'));
+      if (!cards.length) return;
+
+      mobileProgrammeIndex = (mobileProgrammeIndex + direction + cards.length) % cards.length;
+      cards.forEach((card, index) => {
+        card.classList.remove('is-active', 'flip-forward', 'flip-backward');
+        card.setAttribute('aria-hidden', String(index !== mobileProgrammeIndex));
+      });
+
+      const activeCard = cards[mobileProgrammeIndex];
+      activeCard.classList.add('is-active');
+      void activeCard.offsetWidth;
+      activeCard.classList.add(direction > 0 ? 'flip-forward' : 'flip-backward');
+    }
+
+    // The Grind Intake Quiz Option Selector
+    function pickIntakeGoal(btn, goalName) {
+      document.querySelectorAll('.intake-option-row').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // Calendar Generation
+    function renderCalendar() {
+      const container = document.getElementById('calendar-days-grid');
+      container.innerHTML = '';
+
+      for (let day = 1; day <= 30; day++) {
+        const cell = document.createElement('div');
+        cell.className = 'day-number-tile';
+        cell.innerText = day;
+
+        if (day < 4) {
+          cell.classList.add('disabled');
+        } else if (day === 4) {
+          cell.classList.add('active');
+        }
+
+        if (day >= 4) {
+          cell.onclick = function() {
+            document.querySelectorAll('.day-number-tile').forEach(c => c.classList.remove('active'));
+            cell.classList.add('active');
+            currentSelectedDate = `${day < 10 ? '0' + day : day} Nov 2026`;
+            syncReceiptState();
+          };
+        }
+
+        container.appendChild(cell);
+      }
+    }
+
+    // Pick Training Slot
+    function pickTimeSlot(elem, slotString) {
+      document.querySelectorAll('.slot-row-card').forEach(s => s.classList.remove('active'));
+      elem.classList.add('active');
+      currentSelectedSlot = slotString;
+      syncReceiptState();
+    }
+
+    // Synchronize Receipt Slip
+    function syncReceiptState() {
+      const selectElem = document.getElementById('form-tier-selector');
+      const opt = selectElem.options[selectElem.selectedIndex];
+      const price = opt.getAttribute('data-price');
+
+      document.getElementById('receipt-datetime-str').innerText = `${currentSelectedDate} \u2022 ${currentSelectedSlot}`;
+      document.getElementById('receipt-price-val').innerText = `R${price}.00`;
+    }
+
+    // Reservation Submit Action
+    function handleReservationSubmit(e) {
+      e.preventDefault();
+      const banner = document.getElementById('booking-confirmation-banner');
+      banner.style.display = 'block';
+      banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Accordion Toggle
+    function toggleAccordion(headerElem) {
+      const drawer = headerElem.nextElementSibling;
+      const sign = headerElem.querySelector('.accordion-sign');
+      const isOpen = drawer.classList.contains('open');
+
+      document.querySelectorAll('.faq-accordion-drawer').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.accordion-sign').forEach(s => s.innerText = '+');
+
+      if (!isOpen) {
+        drawer.classList.add('open');
+        sign.innerText = '−';
+      }
+    }
+
+    // Initializer
+    document.addEventListener('DOMContentLoaded', () => {
+      const validViews = ['home', 'programmes', 'programme-detail', 'booking', 'mentorship', 'location'];
+      const storedRoute = window.history.state?.jongaBonitaRoute ? window.history.state : null;
+      const hashRoute = window.location.hash.slice(1);
+      const initialView = storedRoute && validViews.includes(storedRoute.viewKey)
+        ? storedRoute.viewKey
+        : validViews.includes(hashRoute) ? hashRoute : 'home';
+      const initialProgrammeKey = storedRoute?.programmeKey &&
+        PROGRAMME_REGISTRY[storedRoute.programmeKey] ? storedRoute.programmeKey : null;
+      if (!storedRoute || !validViews.includes(storedRoute.viewKey)) {
+        window.history.replaceState({
+          jongaBonitaRoute: true,
+          viewKey: initialView,
+          programmeKey: initialProgrammeKey,
+          entryIndex: 0,
+          scrollY: window.scrollY
+        }, '', window.location.href);
+      }
+      renderRoute(initialView, initialProgrammeKey);
+
+      window.addEventListener('popstate', event => {
+        const state = event.state;
+        if (!state?.jongaBonitaRoute || !validViews.includes(state.viewKey)) return;
+        renderRoute(state.viewKey, state.programmeKey);
+        window.scrollTo({ top: state.scrollY || 0, behavior: 'auto' });
+      });
+
+      const intro = document.getElementById('first-visit-intro');
+      if (document.documentElement.classList.contains('intro-pending') && intro) {
+        const finishIntro = () => {
+          if (!document.documentElement.classList.contains('intro-pending')) return;
+
+          window.clearTimeout(introFallback);
+          document.documentElement.classList.remove('intro-pending');
+          try {
+            localStorage.setItem('jongaBonitaIntroSeen', 'true');
+          } catch (error) {
+            console.warn('The first-visit intro could not be saved in browser storage.', error);
+          }
+        };
+        let introFallback = window.setTimeout(finishIntro, 3200);
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          finishIntro();
+        } else {
+          intro.addEventListener('animationend', event => {
+            if (event.target === intro && event.animationName === 'introBackdropReveal') {
+              finishIntro();
+            }
+          }, { once: true });
+          intro.classList.add('is-playing');
+        }
+      }
+
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.querySelectorAll('.grind-program-slide, .coach-profile-section').forEach(target => {
+          target.addEventListener('pointermove', event => {
+            const bounds = target.getBoundingClientRect();
+            target.style.setProperty('--pointer-x', `${event.clientX - bounds.left}px`);
+            target.style.setProperty('--pointer-y', `${event.clientY - bounds.top}px`);
+          });
+        });
+      }
+
+      renderCalendar();
+      syncReceiptState();
+
+      const programmeReel = document.getElementById('programmes-reel');
+      syncMobileProgrammeCarousel();
+
+      programmeReel.addEventListener('pointerdown', event => {
+        if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+        programmeSwipeStart = { x: event.clientX, y: event.clientY };
+        programmeReel.setPointerCapture(event.pointerId);
+      });
+
+      programmeReel.addEventListener('pointerup', event => {
+        if (!programmeSwipeStart) return;
+        const deltaX = event.clientX - programmeSwipeStart.x;
+        const deltaY = event.clientY - programmeSwipeStart.y;
+        programmeSwipeStart = null;
+        if (!window.matchMedia('(max-width: 768px)').matches ||
+            Math.abs(deltaX) < 48 ||
+            Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+        suppressProgrammeCardClick = true;
+        window.setTimeout(() => {
+          suppressProgrammeCardClick = false;
+        }, 500);
+        scrollCarousel(deltaX < 0 ? 1 : -1);
+      });
+
+      programmeReel.addEventListener('pointercancel', () => {
+        programmeSwipeStart = null;
+      });
+
+      programmeReel.addEventListener('click', event => {
+        if (!suppressProgrammeCardClick) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        suppressProgrammeCardClick = false;
+      }, true);
+
+      const progressBar = document.querySelector('.scroll-progress-bar');
+      const updateScrollProgress = () => {
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+        progressBar.style.transform = `scaleX(${Math.min(1, Math.max(0, progress))})`;
+      };
+      const approachSection = document.querySelector('.sticky-split-section');
+      const approachCards = Array.from(approachSection.querySelectorAll('[data-approach-image]'));
+      const approachPhotos = Array.from(approachSection.querySelectorAll('.approach-photo'));
+      let approachFramePending = false;
+      const updateApproachPhoto = () => {
+        approachFramePending = false;
+        const sectionBounds = approachSection.getBoundingClientRect();
+        if (sectionBounds.bottom <= 0 || sectionBounds.top >= window.innerHeight) return;
+
+        const viewportCenter = window.innerHeight / 2;
+        const activeCard = approachCards.reduce((closest, card) => {
+          const bounds = card.getBoundingClientRect();
+          const distance = Math.abs(bounds.top + bounds.height / 2 - viewportCenter);
+          return !closest || distance < closest.distance ? { card, distance } : closest;
+        }, null);
+        if (!activeCard) return;
+
+        const activePhotoIndex = Number(activeCard.card.dataset.approachImage);
+        approachPhotos.forEach((photo, index) => {
+          photo.classList.toggle('is-active', index === activePhotoIndex);
+        });
+      };
+      const scheduleApproachPhotoUpdate = () => {
+        if (approachFramePending) return;
+        approachFramePending = true;
+        window.requestAnimationFrame(updateApproachPhoto);
+      };
+      window.addEventListener('scroll', scheduleApproachPhotoUpdate, { passive: true });
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      window.addEventListener('resize', () => {
+        updateScrollProgress();
+        syncMobileProgrammeCarousel();
+        scheduleApproachPhotoUpdate();
+      });
+      updateScrollProgress();
+      updateApproachPhoto();
+
+      const revealTargets = document.querySelectorAll(
+        '.metrics-row-strip, .horizontal-scroll-container, .mission-callout-strip, .sticky-pinned-col, .scroll-testimonials-column > *, .thegrind-review-box, .faq-wrapper-section, .faq-accordion-row, .thatchfield-ground-section, .grind-program-slide'
+      );
+      if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealTargets.forEach((target, index) => {
+          target.classList.add('scroll-reveal');
+          target.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
+          revealObserver.observe(target);
+        });
+      } else {
+        revealTargets.forEach(target => target.classList.add('is-visible'));
+      }
+    });
+  </script>
+</body>
+</html>
