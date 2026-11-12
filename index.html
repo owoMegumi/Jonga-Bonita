@@ -1840,6 +1840,29 @@
       border-top-color: var(--chalk-line);
     }
 
+    #programmes-reel .programme-tier-trophy {
+      position: absolute;
+      z-index: 1;
+      top: 8%;
+      left: 50%;
+      width: 76%;
+      height: 58%;
+      object-fit: contain;
+      opacity: 0.55;
+      filter: brightness(0.65) contrast(1.1) grayscale(30%);
+      transform: translateX(-50%) scale(0.92) translateY(10px);
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), filter 0.65s ease, opacity 0.65s ease;
+      pointer-events: none;
+    }
+
+    #programmes-reel .grind-program-slide:hover .slide-media-holder .programme-tier-trophy,
+    #programmes-reel .grind-program-slide:focus-visible .slide-media-holder .programme-tier-trophy,
+    #programmes-reel .grind-program-slide.is-active .slide-media-holder .programme-tier-trophy {
+      opacity: 1;
+      filter: brightness(1.22) contrast(1.2) drop-shadow(0 15px 35px rgba(0, 82, 255, 0.75)) drop-shadow(0 0 50px rgba(56, 189, 248, 0.45));
+      transform: translateX(-50%) scale(1.08) translateY(-14px);
+    }
+
     .slide-title {
       color: #fff;
       font-size: clamp(1.55rem, 2vw, 1.9rem);
@@ -2797,6 +2820,7 @@
                 <div class="slide-media-holder">
                   <span class="slide-tag">Bronze Package</span>
                   <img src="jonga-media/programme-individual.jpg" alt="Coach mentoring a young footballer">
+                  <img class="programme-tier-trophy" src="jonga-media/Tier-trophy2.png" alt="" aria-hidden="true">
                 </div>
                 <div class="slide-body-content">
                   <div>
@@ -2817,6 +2841,7 @@
                 <div class="slide-media-holder">
                   <span class="slide-tag">Silver Package</span>
                   <img src="jonga-media/programme-group.jpg" alt="Players training together on the football pitch">
+                  <img class="programme-tier-trophy" src="jonga-media/Tier-trophy4.png" alt="" aria-hidden="true">
                 </div>
                 <div class="slide-body-content">
                   <div>
@@ -2837,6 +2862,7 @@
                 <div class="slide-media-holder">
                   <span class="slide-tag">Gold Package</span>
                   <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=900&auto=format&fit=crop" alt="Players training on a football pitch">
+                  <img class="programme-tier-trophy" src="jonga-media/Tier-trophy3.png" alt="" aria-hidden="true">
                 </div>
                 <div class="slide-body-content">
                   <div>
@@ -2857,6 +2883,7 @@
                 <div class="slide-media-holder">
                   <span class="slide-tag">Elite Package</span>
                   <img src="jonga-media/programme-mentorship.jpg" alt="Coach demonstrating a football drill">
+                  <img class="programme-tier-trophy" src="jonga-media/Tier-trophy1.png" alt="" aria-hidden="true">
                 </div>
                 <div class="slide-body-content">
                   <div>
